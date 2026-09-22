@@ -14,13 +14,13 @@
             "args": "wazza la gaaang"
         },
                 {
-            "name": "Python Debugger: data_small.json",
+            "name": "Python Debugger: data_large.json",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "args": ["${workspaceFolder}/data_small.json"]
+            "args": "C:\\Users\\wlabine\\repos\\NAND403_A26_Ateliers\\WilliamLabine_TP1\\data_small.json"
+
         },
                 {
             "name": "Python Debugger: data_large.json",
@@ -28,11 +28,29 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "args": [
-                "${workspaceFolder}/data_large.json"
-            ]
+            "args": "C:\\Users\\wlabine\\repos\\NAND403_A26_Ateliers\\WilliamLabine_TP1\\data_large.json"
 
         }
+        //         {
+        //     "name": "Python Debugger: data_small.json",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "program": "${file}",
+        //     "console": "integratedTerminal",
+        //     "cwd": "${workspaceFolder}",
+        //     "args": ["${workspaceFolder}/data_small.json"]
+        // },
+        //         {
+        //     "name": "Python Debugger: data_large.json",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "program": "${file}",
+        //     "console": "integratedTerminal",
+        //     "cwd": "${workspaceFolder}",
+        //     "args": [
+        //         "${workspaceFolder}/data_large.json"
+        //     ]
+
+        // },
     ]
 }
