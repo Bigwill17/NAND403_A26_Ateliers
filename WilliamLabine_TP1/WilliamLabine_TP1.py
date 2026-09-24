@@ -85,6 +85,9 @@ def set_window_and_stuff(window, tableau):
     search_bar.setPlaceholderText("Rechercher")
     layout.addWidget(search_bar)
 
+    #Connection de la fonction qui filtre les mots recherchés quand on écrit dans la barre de recherche
+    search_bar.textChanged.connect(filter_research)
+
     #Ajout du tableau dans la vertical box
     layout.addWidget(tableau)
 
@@ -105,6 +108,19 @@ def fill_tableau(tableau):
     #Le setSortingEnabled(True) de base organise ma première colonne en ordre décroissant, alors je la remets en ordre croissant tout de suite après
     tableau.sortByColumn(0, Qt.SortOrder.AscendingOrder)
 
+def filter_research(text):
+
+    print(text)
+    print(liste_de_tout)
+
+    #mon_tableau.setRowHidden(0, True)
+    for row_index in range(len(data)):
+        for column_index in range(len(keys)):
+
+            if (text in str(data[row_index][keys[column_index]])):
+                mon_tableau.setRowHidden(row_index, True)
+    
+
 #On commence en testant le chargement du fichier json et on met celui-ci dans "data"
 data = test_json('data_small.json')
 
@@ -116,6 +132,12 @@ data = test_json('data_small.json')
 #On va chercher les clés du fichier json. On les utilisera pour setter les horizontal header labels et pour naviguer dans "data"
 keys = get_json_keys()
 
+liste_de_tout = []
+
+for row_index in range(len(data)):
+    for column_index in range(len(keys)):
+        liste_de_tout.append(data[row_index][keys[column_index]])
+
 #Création de mon tableau avec autant de rangées que d'objets dans mon JSON, et autant de colonnes que de "keys"
 mon_tableau = QTableWidget(len(data), len(keys))
 
@@ -125,6 +147,8 @@ ma_window = QMainWindow()
 set_window_and_stuff(ma_window, mon_tableau)
 
 fill_tableau(mon_tableau)
+
+
 
 #Afficher ma fenêtre avec tout
 ma_window.show()
