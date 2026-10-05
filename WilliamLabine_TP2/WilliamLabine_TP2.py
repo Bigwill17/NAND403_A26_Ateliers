@@ -48,12 +48,15 @@ def test_json(file_path):
         mon_message_derreur.show()
         sys.exit(app.exec())
 
+#Création de la fonction spéciale qui ouvre et ferme un "chunk" avec toutes les lignes de codes choisies
 @contextmanager
-def custom_undo_chunk():
+def ctrlz_chunk():
+    #On ouvre le chunk au début
     cmds.undoInfo(openChunk=True)
     try:
         yield
     finally:
+        #On s'assure de refermer le chunk!
         cmds.undoInfo(closeChunk=True)
 
 class MessageBoard(QWidget):
@@ -73,22 +76,33 @@ class MessageBoard(QWidget):
             #On teste le chargement du fichier JSON et on met celui-ci dans data
             data = test_json(file_path)
 
-            with custom_undo_chunk():
+            #En utilisant le chunk de control Z, on active toutes nos fonctionnalités
+            with ctrlz_chunk():
+
+                #Si "Apply to selection only" est coché :
                 if selection_only_checkbox.isChecked():
+                    #On ne prend que la sélection active
                     objects = cmds.ls(selection = True)
                 else:
+                    #On prend tous les objets du outliner
                     objects = cmds.ls(transforms=True)
 
+                #Si "Apply colors" est coché :
                 if colors_checkbox.isChecked():
+                    #On vérifie le préfixe de la clé ("SM_", "FX_", "LGT_") sur tous les objets sélectionnés
                     for keys in data:
                         for obj in objects:
                             if keys in obj:
+                                #On set la couleur en fonciton du préfixe de la clé
                                 cmds.setAttr(f"{obj}.useOutlinerColor", True)
                                 cmds.setAttr(f"{obj}.outlinerColor", data[keys][0], data[keys][1], data[keys][2], type="double3")
 
+                #Si "Apply reorder" est coché :
                 if reorder_checkbox.isChecked():
+                    #On réorganise les objets de manière décroissante
                     objects_sorted = sorted(objects, reverse=True)
 
+                    #Puis on les organise en haut du reste (le décroissant se défait et ça revient croissant)
                     for obj in objects_sorted:
                         cmds.reorder(obj, front=True)
         
@@ -123,8 +137,10 @@ class MessageBoard(QWidget):
         button.clicked.connect(on_click)
         layout.addWidget(button)
 
+#Création d'une variable qui servira au path du JSON
 file_path = 0
 
+#Fonction main qui va afficher notre widget principal
 def main():
     global widget
     try:
