@@ -1,6 +1,8 @@
 import sys
 import json
 from PySide6.QtWidgets import QMessageBox, QApplication, QTextEdit, QLabel, QWidget, QVBoxLayout, QPushButton, QCheckBox
+import maya.cmds as cmds
+from contextlib import contextmanager
 
 #Tester le fichier JSON en le loadant, ou échouer lamentablement et afficher un message d'erreur digne
 def test_json(file_path):
@@ -46,6 +48,14 @@ def test_json(file_path):
         mon_message_derreur.show()
         sys.exit(app.exec())
 
+@contextmanager
+def custom_undo_chunk():
+    cmds.undoInfo(openChunk=True)
+    try:
+        yield
+    finally:
+        cmds.undoInfo(closeChunk=True)
+
 class MessageBoard(QWidget):
     def __init__(self):
         #Initialisation du board avec toutes les options d'organisation
@@ -54,15 +64,6 @@ class MessageBoard(QWidget):
         self.create_ui()
 
     def create_ui(self):
-
-        def apply_on_selection_only():
-            print("on selection only")
-
-        def apply_colors():
-            print("colooors!")
-
-        def apply_reorder():
-            print("and now, order!")
         
         #Fonction appelée lorsqu'on appuie sur le bouton du board pour organiser
         def on_click(self):
@@ -72,17 +73,24 @@ class MessageBoard(QWidget):
             #On teste le chargement du fichier JSON et on met celui-ci dans data
             data = test_json(file_path)
 
-            #On print data pour tester le JSON
-            print(data)
+            with custom_undo_chunk():
+                if selection_only_checkbox.isChecked():
+                    objects = cmds.ls(selection = True)
+                else:
+                    objects = cmds.ls(transforms=True)
 
-            if selection_only_checkbox.isChecked():
-                apply_on_selection_only()
+                if colors_checkbox.isChecked():
+                    for keys in data:
+                        for obj in objects:
+                            if keys in obj:
+                                cmds.setAttr(f"{obj}.useOutlinerColor", True)
+                                cmds.setAttr(f"{obj}.outlinerColor", data[keys][0], data[keys][1], data[keys][2], type="double3")
 
-            if colors_checkbox.isChecked():
-                apply_colors()
+                if reorder_checkbox.isChecked():
+                    objects_sorted = sorted(objects, reverse=True)
 
-            if reorder_checkbox.isChecked():
-                apply_reorder()
+                    for obj in objects_sorted:
+                        cmds.reorder(obj, front=True)
         
         #Création du layout de mon board
         layout = QVBoxLayout(self)
@@ -93,6 +101,7 @@ class MessageBoard(QWidget):
 
         #Ajout de la zone d'entrée de chemin vers JSON
         text = QTextEdit()
+        text.setFixedHeight(30)
         text.setPlaceholderText("JSON path...")
         layout.addWidget(text)
 
@@ -114,8 +123,6 @@ class MessageBoard(QWidget):
         button.clicked.connect(on_click)
         layout.addWidget(button)
 
-#app = QApplication(sys.argv)
-
 file_path = 0
 
 def main():
@@ -128,5 +135,3 @@ def main():
     widget.show()
 
 main()
-
-#sys.exit(app.exec())
