@@ -1,13 +1,6 @@
 import random
 from maya import cmds
-from PySide6.QtWidgets import (
-    QWidget,
-    QPushButton,
-    QVBoxLayout,
-    QTextEdit,
-    QLabel,
-    QHBoxLayout
-)
+from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout, QTextEdit, QLabel, QHBoxLayout
 
 class RandomGenerator(QWidget):
     
@@ -18,10 +11,80 @@ class RandomGenerator(QWidget):
         self.build_ui()
     
     def build_ui(self):
+
+        def create_object(self):
+
+            #Initialisation de mes variables provenant des textedit, si rien n'est écrit dans les textedit, on met une valeur par défaut
+            if (number_objects_textedit.toPlainText() == ""):
+                number_of_objects = 1
+            else:
+                number_of_objects = int(number_objects_textedit.toPlainText())
+
+            if (min_x_textedit.toPlainText() == ""):
+                min_x = 0
+            else:
+                min_x = float(min_x_textedit.toPlainText())
+
+            if (max_x_textedit.toPlainText() == ""):
+                max_x = 0
+            else:
+                max_x = float(max_x_textedit.toPlainText())
+
+            if (min_y_textedit.toPlainText() == ""):
+                min_y = 0
+            else:
+                min_y = float(min_y_textedit.toPlainText())
+
+            if (max_y_textedit.toPlainText() == ""):
+                max_y = 0
+            else:
+                max_y = float(max_y_textedit.toPlainText())
+
+            if (min_z_textedit.toPlainText() == ""):
+                min_z = 0
+            else:
+                min_z = float(min_z_textedit.toPlainText())
+
+            if (max_z_textedit.toPlainText() == ""):
+                max_z = 0
+            else:
+                max_z = float(max_z_textedit.toPlainText())
+
+            if (min_scale_textedit.toPlainText() == ""):
+                min_scale = 1
+            else:
+                min_scale = float(min_scale_textedit.toPlainText())
+
+            if (max_scale_textedit.toPlainText() == ""):
+                max_scale = 1
+            else:
+                max_scale = float(max_scale_textedit.toPlainText())
+
+            #On fait une boucle égal au number of objects
+            for i in range(number_of_objects):
+                forme = random.choice(["cube", "cylindre", "sphere"])
+                if forme == "cube":
+                    objet = cmds.polyCube()[0]
+                elif forme == "cylindre":
+                    objet = cmds.polyCylinder()[0]
+                else:
+                    objet = cmds.polySphere()[0]
+
+                #On met une valeur aléatoire dans les positions x, y et z et le scale selon le min et max donnés
+                random_x = random.uniform(min_x, max_x)
+                random_y = random.uniform(min_y, max_y)
+                random_z = random.uniform(min_z, max_z)
+                random_scale = random.uniform(min_scale, max_scale)
+
+                #On déplace les formes et on les scale en conséquence
+                cmds.move(random_x, random_y, random_z, objet)
+                cmds.scale(random_scale, random_scale, random_scale, objet)
+
         v_layout = QVBoxLayout(self)
 
         #Ajout de la zone où l'utilisateur inquera le nombre d'objets à créer
         number_objects_layout = QHBoxLayout()
+
 
         number_objects_text = QLabel()
         number_objects_text.setText("Number of objects")
@@ -127,22 +190,8 @@ class RandomGenerator(QWidget):
 
         #Ajout du bouton pour créer les objets
         self.create_button = QPushButton("Create")
-        self.create_button.clicked.connect(self.create_object)
+        self.create_button.clicked.connect(create_object)
         v_layout.addWidget(self.create_button)
-
-    def create_object(self):
-        forme = random.choice(["cube", "cylindre", "sphere"])
-
-        if forme == "cube":
-            objet = cmds.polyCube()[0]
-        elif forme == "cylindre":
-            objet = cmds.polyCylinder()[0]
-        else:
-            objet = cmds.polySphere()[0]
-
-        random_value = random.uniform(-10, 10)
-        cmds.move(random_value, random_value, random_value, objet)
-
 
 def main():
     global tool_window
