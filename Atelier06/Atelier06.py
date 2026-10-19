@@ -18,194 +18,161 @@ class RandomGenerator(QWidget):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Atelier 4-5")
-        self.setMinimumWidth(330)
+        self.setWindowTitle("Atelier 6")
+        self.setMinimumWidth(220)
         self.build_ui()
     
     def build_ui(self):
 
-        def create_object(self):
+        def create_fence(self):
 
             #En utilisant le chunk de control Z, on active toutes nos fonctionnalités
             with ctrlz_chunk():
             
                 #Initialisation de mes variables provenant des textedit, si rien n'est écrit dans les textedit, on met une valeur par défaut
-                if (number_objects_textedit.toPlainText() == ""):
-                    number_of_objects = 1
+                if (number_v_poles_textedit.toPlainText() == ""):
+                    number_v_poles = 1
                 else:
-                    number_of_objects = int(number_objects_textedit.toPlainText())
+                    number_v_poles = int(number_v_poles_textedit.toPlainText())
 
-                if (min_x_textedit.toPlainText() == ""):
-                    min_x = 0
+                if (hauteur_v_poles_textedit.toPlainText() == ""):
+                    hauteur_v_poles = 100
                 else:
-                    min_x = float(min_x_textedit.toPlainText())
+                    hauteur_v_poles = float(hauteur_v_poles_textedit.toPlainText())
 
-                if (max_x_textedit.toPlainText() == ""):
-                    max_x = 0
+                if (largeur_v_poles_textedit.toPlainText() == ""):
+                    largeur_v_poles = 5
                 else:
-                    max_x = float(max_x_textedit.toPlainText())
+                    largeur_v_poles = float(largeur_v_poles_textedit.toPlainText())
 
-                if (min_y_textedit.toPlainText() == ""):
-                    min_y = 0
+                if (number_h_poles_textedit.toPlainText() == ""):
+                    number_h_poles = 2
                 else:
-                    min_y = float(min_y_textedit.toPlainText())
+                    number_h_poles = int(number_h_poles_textedit.toPlainText())
 
-                if (max_y_textedit.toPlainText() == ""):
-                    max_y = 0
+                if (longueur_h_poles_textedit.toPlainText() == ""):
+                    longueur_h_poles = 100
                 else:
-                    max_y = float(max_y_textedit.toPlainText())
+                    longueur_h_poles = float(longueur_h_poles_textedit.toPlainText())
 
-                if (min_z_textedit.toPlainText() == ""):
-                    min_z = 0
+                if (largeur_h_poles_textedit.toPlainText() == ""):
+                    largeur_h_poles = 3
                 else:
-                    min_z = float(min_z_textedit.toPlainText())
+                    largeur_h_poles = float(largeur_h_poles_textedit.toPlainText())
 
-                if (max_z_textedit.toPlainText() == ""):
-                    max_z = 0
-                else:
-                    max_z = float(max_z_textedit.toPlainText())
+                #On fait apparaitre le premier pole
+                pole01 = cmds.polyCube()[0]
+                cmds.scale(largeur_v_poles, hauteur_v_poles, largeur_v_poles, pole01)
 
-                if (min_scale_textedit.toPlainText() == ""):
-                    min_scale = 1
-                else:
-                    min_scale = float(min_scale_textedit.toPlainText())
-
-                if (max_scale_textedit.toPlainText() == ""):
-                    max_scale = 1
-                else:
-                    max_scale = float(max_scale_textedit.toPlainText())
-
-                #On fait une boucle égal au number of objects
-                for i in range(number_of_objects):
-                    forme = random.choice(["cube", "cylindre", "sphere"])
-                    if forme == "cube":
-                        objet = cmds.polyCube()[0]
-                    elif forme == "cylindre":
-                        objet = cmds.polyCylinder()[0]
-                    else:
-                        objet = cmds.polySphere()[0]
-
-                    #On met une valeur aléatoire dans les positions x, y et z et le scale selon le min et max donnés
-                    random_x = random.uniform(min_x, max_x)
-                    random_y = random.uniform(min_y, max_y)
-                    random_z = random.uniform(min_z, max_z)
-                    random_scale = random.uniform(min_scale, max_scale)
+                #On fait une boucle pour les poles verticales
+                for i in range(number_v_poles - 1):
+                    v_pole = cmds.polyCube()[0]
 
                     #On déplace les formes et on les scale en conséquence
-                    cmds.move(random_x, random_y, random_z, objet)
-                    cmds.scale(random_scale, random_scale, random_scale, objet)
+                    cmds.move((i + 1) * longueur_h_poles, 0, 0, v_pole)
+                    cmds.scale(largeur_v_poles, hauteur_v_poles, largeur_v_poles, v_pole)
+
+                    #On fait une boucle pour les poles horizontales
+                    for j in range(number_h_poles):
+                        h_pole = cmds.polyCube()[0]
+
+                        #On déplace les formes et on les scale en conséquence
+                        cmds.move((longueur_h_poles * i) + longueur_h_poles / 2, ((hauteur_v_poles / 2) / (number_h_poles)) * j - largeur_h_poles, 0, h_pole)
+                        cmds.scale(longueur_h_poles, largeur_h_poles, largeur_h_poles, h_pole)
 
         v_layout = QVBoxLayout(self)
 
-        #Ajout de la zone où l'utilisateur inquera le nombre d'objets à créer
-        number_objects_layout = QHBoxLayout()
+        #Ajout de la zone où l'utilisateur inquera le nombre de poles verticales à créer
+        number_v_poles_layout = QHBoxLayout()
 
+        number_v_poles_text = QLabel()
+        number_v_poles_text.setText("Nombre de poles verticales")
+        number_v_poles_layout.addWidget(number_v_poles_text)
 
-        number_objects_text = QLabel()
-        number_objects_text.setText("Number of objects")
-        number_objects_layout.addWidget(number_objects_text)
+        number_v_poles_textedit = QTextEdit()
+        number_v_poles_textedit.setFixedHeight(30)
+        number_v_poles_textedit.setFixedWidth(100)
+        number_v_poles_layout.addWidget(number_v_poles_textedit)
 
-        number_objects_textedit = QTextEdit()
-        number_objects_textedit.setFixedHeight(30)
-        number_objects_textedit.setFixedWidth(100)
-        number_objects_layout.addWidget(number_objects_textedit)
+        #Ajout des TextEdit pour la hauteur des poles verticales
+        hauteur_v_poles_layout = QHBoxLayout()
+
+        hauteur_v_poles_text = QLabel()
+        hauteur_v_poles_text.setText("Hauteur des poles verticales")
+        hauteur_v_poles_layout.addWidget(hauteur_v_poles_text)
+
+        hauteur_v_poles_textedit = QTextEdit()
+        hauteur_v_poles_textedit.setFixedHeight(30)
+        hauteur_v_poles_textedit.setFixedWidth(100)
+        hauteur_v_poles_layout.addWidget(hauteur_v_poles_textedit)
+
+        #Ajout des TextEdit pour la largeur des poles verticales
+        largeur_v_poles_layout = QHBoxLayout()
+
+        largeur_v_poles_text = QLabel()
+        largeur_v_poles_text.setText("Largeur des poles verticales")
+        largeur_v_poles_layout.addWidget(largeur_v_poles_text)
+
+        largeur_v_poles_textedit = QTextEdit()
+        largeur_v_poles_textedit.setFixedHeight(30)
+        largeur_v_poles_textedit.setFixedWidth(100)
+        largeur_v_poles_layout.addWidget(largeur_v_poles_textedit)
+
+        #Ajout d'un layout blank pour bien organiser le board
+        blank_layout = QHBoxLayout()
 
         blank_text = QLabel()
         blank_text.setText("")
-        number_objects_layout.addWidget(blank_text)
+        blank_layout.addWidget(blank_text)
 
-        #Ajout des textes "Min" et "Max"
-        min_max_layout = QHBoxLayout()
+        #Ajout de la zone où l'utilisateur inquera le nombre de poles horizontales à créer
+        number_h_poles_layout = QHBoxLayout()
 
-        min_max_layout.addWidget(blank_text)
+        number_h_poles_text = QLabel()
+        number_h_poles_text.setText("Nombre de poles horizontales")
+        number_h_poles_layout.addWidget(number_h_poles_text)
 
-        min_text = QLabel()
-        min_text.setText("Min")
-        min_max_layout.addWidget(min_text)
+        number_h_poles_textedit = QTextEdit()
+        number_h_poles_textedit.setFixedHeight(30)
+        number_h_poles_textedit.setFixedWidth(100)
+        number_h_poles_layout.addWidget(number_h_poles_textedit)
 
-        max_text = QLabel()
-        max_text.setText("Max")
-        min_max_layout.addWidget(max_text)
+        #Ajout des TextEdit pour la hauteur des poles
+        longueur_h_poles_layout = QHBoxLayout()
 
-        #Ajout des TextEdit pour le min et max de la position X
-        position_x_layout = QHBoxLayout()
+        longueur_h_poles_text = QLabel()
+        longueur_h_poles_text.setText("Longueur des poles horizontales")
+        longueur_h_poles_layout.addWidget(longueur_h_poles_text)
 
-        position_x_text = QLabel()
-        position_x_text.setText("Position X")
-        position_x_layout.addWidget(position_x_text)
+        longueur_h_poles_textedit = QTextEdit()
+        longueur_h_poles_textedit.setFixedHeight(30)
+        longueur_h_poles_textedit.setFixedWidth(100)
+        longueur_h_poles_layout.addWidget(longueur_h_poles_textedit)
 
-        min_x_textedit = QTextEdit()
-        min_x_textedit.setFixedHeight(30)
-        min_x_textedit.setFixedWidth(100)
-        position_x_layout.addWidget(min_x_textedit)
+        #Ajout des TextEdit pour la largeur des poles horizontales
+        largeur_h_poles_layout = QHBoxLayout()
 
-        max_x_textedit = QTextEdit()
-        max_x_textedit.setFixedHeight(30)
-        max_x_textedit.setFixedWidth(100)
-        position_x_layout.addWidget(max_x_textedit)
+        largeur_h_poles_text = QLabel()
+        largeur_h_poles_text.setText("Largeur des poles horizontales")
+        largeur_h_poles_layout.addWidget(largeur_h_poles_text)
 
-        #Ajout des TextEdit pour le min et max de la position Y
-        position_y_layout = QHBoxLayout()
-
-        position_y_text = QLabel()
-        position_y_text.setText("Position Y")
-        position_y_layout.addWidget(position_y_text)
-
-        min_y_textedit = QTextEdit()
-        min_y_textedit.setFixedHeight(30)
-        min_y_textedit.setFixedWidth(100)
-        position_y_layout.addWidget(min_y_textedit)
-
-        max_y_textedit = QTextEdit()
-        max_y_textedit.setFixedHeight(30)
-        max_y_textedit.setFixedWidth(100)
-        position_y_layout.addWidget(max_y_textedit)
-
-        #Ajout des TextEdit pour le min et max de la position Z
-        position_z_layout = QHBoxLayout()
-
-        position_z_text = QLabel()
-        position_z_text.setText("Position Z")
-        position_z_layout.addWidget(position_z_text)
-
-        min_z_textedit = QTextEdit()
-        min_z_textedit.setFixedHeight(30)
-        min_z_textedit.setFixedWidth(100)
-        position_z_layout.addWidget(min_z_textedit)
-
-        max_z_textedit = QTextEdit()
-        max_z_textedit.setFixedHeight(30)
-        max_z_textedit.setFixedWidth(100)
-        position_z_layout.addWidget(max_z_textedit)
-
-        #Ajout des TextEdit pour le scale des objets
-        scale_layout = QHBoxLayout()
-
-        scale_text = QLabel()
-        scale_text.setText("Scale")
-        scale_layout.addWidget(scale_text)
-
-        min_scale_textedit = QTextEdit()
-        min_scale_textedit.setFixedHeight(30)
-        min_scale_textedit.setFixedWidth(100)
-        scale_layout.addWidget(min_scale_textedit)
-
-        max_scale_textedit = QTextEdit()
-        max_scale_textedit.setFixedHeight(30)
-        max_scale_textedit.setFixedWidth(100)
-        scale_layout.addWidget(max_scale_textedit)
+        largeur_h_poles_textedit = QTextEdit()
+        largeur_h_poles_textedit.setFixedHeight(30)
+        largeur_h_poles_textedit.setFixedWidth(100)
+        largeur_h_poles_layout.addWidget(largeur_h_poles_textedit)
 
         #Ajout de tous les layout horizontaux dans le principal layout vertical
-        v_layout.addLayout(number_objects_layout)
-        v_layout.addLayout(min_max_layout)
-        v_layout.addLayout(position_x_layout)
-        v_layout.addLayout(position_y_layout)
-        v_layout.addLayout(position_z_layout)
-        v_layout.addLayout(scale_layout)
+        v_layout.addLayout(number_v_poles_layout)
+        v_layout.addLayout(hauteur_v_poles_layout)
+        v_layout.addLayout(largeur_v_poles_layout)
+        v_layout.addLayout(blank_layout)
+        v_layout.addLayout(number_h_poles_layout)
+        v_layout.addLayout(longueur_h_poles_layout)
+        v_layout.addLayout(largeur_h_poles_layout)
 
         #Ajout du bouton pour créer les objets
         self.create_button = QPushButton("Create")
-        self.create_button.clicked.connect(create_object)
+        self.create_button.clicked.connect(create_fence)
         v_layout.addWidget(self.create_button)
 
 def main():
