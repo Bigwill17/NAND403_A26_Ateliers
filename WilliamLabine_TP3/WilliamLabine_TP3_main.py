@@ -8,15 +8,20 @@ absolute_folder_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(absolute_folder_path)
 
 # Dans mon fichier du UI, on importe la classe RandomAnimationUI
-from WilliamLabine_TP3_ui import RandomAnimationUI
+import WilliamLabine_TP3_ui
 
+# On reload le fichier ui pour que Maya ne perde pas la tête
+import importlib
+importlib.reload(WilliamLabine_TP3_ui)
+
+# Fonction main ;)
 def main():
-    global tool_window
+    global widget
     try:
-        tool_window.close()
+        widget.close()
     except Exception:
         pass
-    random_animation_ui = RandomAnimationUI()
-    random_animation_ui.show()
+    widget = WilliamLabine_TP3_ui.RandomAnimationUI()
+    widget.show()
 
 main()
