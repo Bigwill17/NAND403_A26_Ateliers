@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, QSpinBox, QGroupBox
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QSpinBox, QGroupBox, QGridLayout
 
 class RandomAnimationUI(QWidget):
     def __init__(self):
@@ -10,31 +10,46 @@ class RandomAnimationUI(QWidget):
 
     def create_ui(self):
 
+        #On génère une animation random selon les données entrées
         def generate_random_animation():
-            print("yes")
-
-        #Crée un QHBoxLayout et le met dans la liste de tous les hbox
-        def create_hbox():
-            self = QHBoxLayout()
-            return self
+            print(duration.value())
+            print(step.value())
+            print(trans_min_x.value())
+            print(trans_min_y.value())
+            print(trans_min_z.value())
+            print(trans_max_x.value())
+            print(trans_max_y.value())
+            print(trans_max_z.value())
+            print(rot_min_x.value())
+            print(rot_min_y.value())
+            print(rot_min_z.value())
+            print(rot_max_x.value())
+            print(rot_max_y.value())
+            print(rot_max_z.value())
+            print(scale_min_x.value())
+            print(scale_min_y.value())
+            print(scale_min_z.value())
+            print(scale_max_x.value())
+            print(scale_max_y.value())
+            print(scale_max_z.value())
         
         #Crée un QSpinBox et le place dans un QHBoxLayout
-        def create_spinbox(hbox):
+        def create_spinbox(gridlayout, row, column):
             self = QSpinBox()
             self.setMaximum(999999)
-            hbox.addWidget(self)
+            gridlayout.addWidget(self, row, column)
             return self
 
         #Crée un QLabel qui servira de titre et le place dans un QHBoxLayout
-        def create_label(text, hbox):
+        def create_label(text, gridlayout, row, column):
             self = QLabel(text)
-            hbox.addWidget(self)
+            gridlayout.addWidget(self, row, column)
             return self
 
         #Crée un QGroupBox dans lequel on met le layout hbox, et on l'ajoute à la liste des groupbox
-        def create_groupbox(title, hbox):
+        def create_groupbox(title, gridlayout):
             self = QGroupBox(title)
-            self.setLayout(hbox)
+            self.setLayout(gridlayout)
             groupbox_list.append(self)
             return self
 
@@ -46,80 +61,69 @@ class RandomAnimationUI(QWidget):
 
         #Création de la zone Animation Timing
         #====================================================================================================
+        timing_grid = QGridLayout()
+        duration_text = create_label("    Duration (Frames):", timing_grid, 0, 0)
+        duration = create_spinbox(timing_grid, 0, 1)
+        step_text = create_label("    Step (Frames):", timing_grid, 0, 2)
+        step = create_spinbox(timing_grid, 0, 3)
 
-        timing_hbox = create_hbox()
-        duration_text = create_label("    Duration (Frames):", timing_hbox)
-        duration = create_spinbox(timing_hbox)
-        step_text = create_label("    Step (Frames):", timing_hbox)
-        step = create_spinbox(timing_hbox)
-
-        animation = create_groupbox("Animation Timing", timing_hbox)
+        animation_groupbox = create_groupbox("Animation Timing", timing_grid)
 
         #Création de la zone Translation Parameters
         #====================================================================================================
+        translation_grid = QGridLayout()
+        trans_min_x_text = create_label("   Min X :", translation_grid, 0, 0)
+        trans_min_x = create_spinbox(translation_grid, 0, 1)
+        trans_min_y_text = create_label("   Min Y :", translation_grid, 0, 2)
+        trans_min_y = create_spinbox(translation_grid, 0, 3)
+        trans_min_z_text = create_label("   Min Z :", translation_grid, 0, 4)
+        trans_min_z = create_spinbox(translation_grid, 0, 5)
+        trans_max_x_text = create_label("   Max X :", translation_grid, 1, 0)
+        trans_max_x = create_spinbox(translation_grid, 1, 1)
+        trans_max_y_text = create_label("   Max Y :", translation_grid, 1, 2)
+        trans_max_y = create_spinbox(translation_grid, 1, 3)
+        trans_max_z_text = create_label("   Max Z :", translation_grid, 1, 4)
+        trans_max_z = create_spinbox(translation_grid, 1, 5)
 
-        trans_title_hbox = create_hbox()
-        trans_title = create_label("Translation Parameters", trans_title_hbox)
-
-        trans_min_hbox = create_hbox()
-        trans_min_x_text = create_label("   Min X :", trans_min_hbox)
-        trans_min_x = create_spinbox(trans_min_hbox)
-        trans_min_y_text = create_label("   Min Y :", trans_min_hbox)
-        trans_min_y = create_spinbox(trans_min_hbox)
-        trans_min_z_text = create_label("   Min Z :", trans_min_hbox)
-        trans_min_z = create_spinbox(trans_min_hbox)
-
-        trans_max_hbox = create_hbox()
-        trans_max_x_text = create_label("   Max X :", trans_max_hbox)
-        trans_max_x = create_spinbox(trans_max_hbox)
-        trans_max_y_text = create_label("   Max Y :", trans_max_hbox)
-        trans_max_y = create_spinbox(trans_max_hbox)
-        trans_max_z_text = create_label("   Max Z :", trans_max_hbox)
-        trans_max_z = create_spinbox(trans_max_hbox)
+        translation_groupbox = create_groupbox("Translation Parameters", translation_grid)
 
         
         #Création de la zone Rotation Parameters
         #====================================================================================================
-        rot_title_hbox = create_hbox()
-        rot_title = create_label("Rotation Parameters", rot_title_hbox)
+        rotation_grid = QGridLayout()
+        rot_min_x_text = create_label("   Min X :", rotation_grid, 0, 0)
+        rot_min_x = create_spinbox(rotation_grid, 0, 1)
+        rot_min_y_text = create_label("   Min Y :", rotation_grid, 0, 2)
+        rot_min_y = create_spinbox(rotation_grid, 0, 3)
+        rot_min_z_text = create_label("   Min Z :", rotation_grid, 0, 4)
+        rot_min_z = create_spinbox(rotation_grid, 0, 5)
+        rot_max_x_text = create_label("   Max X :", rotation_grid, 1, 0)
+        rot_max_x = create_spinbox(rotation_grid, 1, 1)
+        rot_max_y_text = create_label("   Max Y :", rotation_grid, 1, 2)
+        rot_max_y = create_spinbox(rotation_grid, 1, 3)
+        rot_max_z_text = create_label("   Max Z :", rotation_grid, 1, 4)
+        rot_max_z = create_spinbox(rotation_grid, 1, 5)
 
-        rot_min_hbox = create_hbox()
-        rot_min_x_text = create_label("   Min X :", rot_min_hbox)
-        rot_min_x = create_spinbox(rot_min_hbox)
-        rot_min_y_text = create_label("   Min Y :", rot_min_hbox)
-        rot_min_y = create_spinbox(rot_min_hbox)
-        rot_min_z_text = create_label("   Min Z :", rot_min_hbox)
-        rot_min_z = create_spinbox(rot_min_hbox)
-
-        rot_max_hbox = create_hbox()
-        rot_max_x_text = create_label("   Max X :", rot_max_hbox)
-        rot_max_x = create_spinbox(rot_max_hbox)
-        rot_max_y_text = create_label("   Max Y :", rot_max_hbox)
-        rot_max_y = create_spinbox(rot_max_hbox)
-        rot_max_z_text = create_label("   Max Z :", rot_max_hbox)
-        rot_max_z = create_spinbox(rot_max_hbox)
+        rotation_groupbox = create_groupbox("Rotation Parameters", rotation_grid)
 
 
         #Création de la zone Scale Parameters
         #====================================================================================================
-        scale_title_hbox = create_hbox()
-        scale_title = create_label("Scale Parameters", scale_title_hbox)
+        scale_grid = QGridLayout()
+        scale_min_x_text = create_label("   Min X :", scale_grid, 0, 0)
+        scale_min_x = create_spinbox(scale_grid, 0, 1)
+        scale_min_y_text = create_label("   Min Y :", scale_grid, 0, 2)
+        scale_min_y = create_spinbox(scale_grid, 0, 3)
+        scale_min_z_text = create_label("   Min Z :", scale_grid, 0, 4)
+        scale_min_z = create_spinbox(scale_grid, 0, 5)
+        scale_max_x_text = create_label("   Max X :", scale_grid, 1, 0)
+        scale_max_x = create_spinbox(scale_grid, 1, 1)
+        scale_max_y_text = create_label("   Max Y :", scale_grid, 1, 2)
+        scale_max_y = create_spinbox(scale_grid, 1, 3)
+        scale_max_z_text = create_label("   Max Z :", scale_grid, 1, 4)
+        scale_max_z = create_spinbox(scale_grid, 1, 5)
 
-        scale_min_hbox = create_hbox()
-        scale_min_x_text = create_label("   Min X :", scale_min_hbox)
-        scale_min_x = create_spinbox(scale_min_hbox)
-        scale_min_y_text = create_label("   Min Y :", scale_min_hbox)
-        scale_min_y = create_spinbox(scale_min_hbox)
-        scale_min_z_text = create_label("   Min Z :", scale_min_hbox)
-        scale_min_z = create_spinbox(scale_min_hbox)
-
-        scale_max_hbox = create_hbox()
-        scale_max_x_text = create_label("   Max X :", scale_max_hbox)
-        scale_max_x = create_spinbox(scale_max_hbox)
-        scale_max_y_text = create_label("   Max Y :", scale_max_hbox)
-        scale_max_y = create_spinbox(scale_max_hbox)
-        scale_max_z_text = create_label("   Max Z :", scale_max_hbox)
-        scale_max_z = create_spinbox(scale_max_hbox)
+        scale_groupbox = create_groupbox("Scale Parameters", scale_grid)
 
 
         #On ajoute le bouton pour générer les animations
@@ -130,8 +134,7 @@ class RandomAnimationUI(QWidget):
 
         #On ajoute tous les layout horizontaux dans le vertical
         #====================================================================================================
-        # for groupbox in groupbox_list:
-        #     layout.addLayout(groupbox)
-        
-        layout.addWidget(animation)
+        for groupbox in groupbox_list:
+            layout.addWidget(groupbox)
+
         layout.addWidget(generate_button)
