@@ -1,3 +1,4 @@
+# correction
 import sys
 from PySide6.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QMainWindow, QLabel, QVBoxLayout, QWidget, QMessageBox, QLineEdit
 from PySide6.QtGui import QGuiApplication, Qt
