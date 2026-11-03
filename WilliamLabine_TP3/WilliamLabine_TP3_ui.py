@@ -1,4 +1,19 @@
+import os
+import sys
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QSpinBox, QGroupBox, QGridLayout
+
+#On trouve le path du dossier dans lequel se trouve ce même fichier
+absolute_folder_path = os.path.dirname(os.path.abspath(__file__))
+
+#On ajoute le path aux paths auxquels sys a accès
+sys.path.append(absolute_folder_path)
+
+#On importe le fichier du ui
+import WilliamLabine_TP3_animator
+
+#On reload le fichier ui pour que Maya ne perde pas la tête
+import importlib
+importlib.reload(WilliamLabine_TP3_animator)
 
 class RandomAnimationUI(QWidget):
     def __init__(self):
@@ -12,26 +27,7 @@ class RandomAnimationUI(QWidget):
 
         #On génère une animation random selon les données entrées
         def generate_random_animation():
-            print(duration.value())
-            print(step.value())
-            print(trans_min_x.value())
-            print(trans_min_y.value())
-            print(trans_min_z.value())
-            print(trans_max_x.value())
-            print(trans_max_y.value())
-            print(trans_max_z.value())
-            print(rot_min_x.value())
-            print(rot_min_y.value())
-            print(rot_min_z.value())
-            print(rot_max_x.value())
-            print(rot_max_y.value())
-            print(rot_max_z.value())
-            print(scale_min_x.value())
-            print(scale_min_y.value())
-            print(scale_min_z.value())
-            print(scale_max_x.value())
-            print(scale_max_y.value())
-            print(scale_max_z.value())
+            WilliamLabine_TP3_animator.generate_random_animation()
         
         #Crée un QSpinBox et le place dans un QHBoxLayout
         def create_spinbox(gridlayout, row, column):
