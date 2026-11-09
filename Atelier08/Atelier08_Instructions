@@ -1,0 +1,43 @@
+# Le but de ce script est de pouvoir facilement centrer un pivot sur un ou plusieurs vertex, edges, faces, ou objets.
+
+# Pour incorporer ce script dans Maya, assurez-vous de récupérer tous les éléments du dossier Atelier08, soit Atelier08.py (le code),
+# Atelier08_Instructions (logiquement vous êtes en trian de le consulter en ce moment même),
+# et CenterPivot_Icon (qui sera utilisé comme icon dans Maya).
+
+# Depuis le dossier Atelier08, enregistrez le fichier CenterPivot_Icon sur votre ordinateur.
+# Je recommande de l'enregistrer dans les dossiers de Maya, soit dans Documents/maya/scripts.
+# Créez un dossier "Icons", qui sera dédié à toutes les prochaines icons utilisées pour vos scripts.
+# Enregistrer le fichier CenterPivot_Icon dans ce dossier "Icons".
+
+# Ouvrez Maya et créez une nouvelles scène ou ouvrez un projet existant, les deux options sont fonctionnelles.
+
+# Si vous n'avez pas déjà de Shelf dédié à vos scripts, c'est le temps de le faire!
+# En haut de la fenêtre de Maya, tout à gauche des Shelves (Curves, Surfaces, Poly Modeling, etc.), cliquez sur le petit icon d'engrenage.
+# Créez une nouvelle Shelf (New Shelf).
+# Donnez-lui un nom approprié, tel que "Scripts".
+# Vous devriez maintenant être dans cette nouvelle Shelf.
+# Si ce n'est pas le cas, elle vient normalement d'apparaître tout à droite des autres Shelves, cliquez dessus.
+
+# Ouvrez le Script Editor de Maya (Windows -> General Editors -> Script Editor).
+# Copiez l'entièreté du code de Atelier08.py (ctrl + A, ctrl + C).
+# Dans le Script Editor de Maya, naviguez jusqu'à la section Python, dans le bas de l'éditeur, à droite de la section MEL.
+# Collez le code précédemment copié dans cette section Python du Script Editor (ctrl + V).
+# Sélectionnez l'entièreté du code maintenant dans Maya (ctrl + A).
+# Avec la roulette de la souris Middle Mouse Button), cliquez sur le code surligné en bleu, maintenez enfoncé et faites le glisser sur la Shelf "Scripts" créée précédemment.
+# Une nouvelle option devrait être apparue dans le Shelf, avec une icon de Python.
+
+# Faites un clic droit sur cette nouvelles option fraîchement créée.
+# Cliquez sur Edit, puis naviguez dans l'onglet "Shelves".
+# Votre nouveau script devrait être sélectionné automatiquement, cliquez sur l'icon de dossier à droite de "Icon Name".
+# Naviguez jusqu'à CenterPivot_Icon (Documents/maya/scripts/Icons/CenterPivot_Icon.png), sélectionnez le et cliquez sur "Open" en bas à droite de la fenêtre.
+# Refermez la fenêtre du Shelf Editor
+
+# Votre nouveau script est prêt à être utilisé!
+# Vous n'avez plus besoin du code présent dans le Script Editor, ou même du Script Editor en lui-même.
+
+# Pour utiliser le script, cliquez sur l'icon CenterPivot dans la Shelf "Scripts" (cercle orange avec trois flèches bleues), une nouvelle fenêtre apparaîtra.
+# Sélectionnez les vertex, edges, faces ou objets désirés, le pivot sera repositionné à leur position moyenne.
+# Une fois la sélection faites, appuyez sur "Apply Selection". Rien ne se passe, et c'est normal, la position moyenne est simplement enregistrée dans le code.
+# Sélectionnez l'objet pour lequel vous voulez repositionner le pivot, et cliquez sur "Center Pivot".
+
+# Voilà, le pivot de l'objet est maintenant centré au centre de votre sélection précédente!
