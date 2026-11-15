@@ -11,7 +11,7 @@ sys.path.append(absolute_folder_path)
 #On importe le fichier du ui
 import WilliamLabine_TP3_animator
 
-#On reload le fichier ui pour que Maya ne perde pas la tête
+# #On reload le fichier ui pour que Maya ne perde pas la tête
 import importlib
 importlib.reload(WilliamLabine_TP3_animator)
 
@@ -27,7 +27,10 @@ class RandomAnimationUI(QWidget):
 
         #On génère une animation random selon les données entrées
         def generate_random_animation():
-            WilliamLabine_TP3_animator.generate_random_animation()
+            WilliamLabine_TP3_animator.generate_random_animation(duration, step,
+                                                                 trans_min_x, trans_max_x, trans_min_y, trans_max_y, trans_min_z, trans_max_z,
+                                                                 rot_min_x, rot_max_x, rot_min_y, rot_max_y, rot_min_z, rot_max_z,
+                                                                 scale_min_x, scale_max_x, scale_min_y, scale_max_y, scale_min_z, scale_max_z)
         
         #Crée un QSpinBox et le place dans un QHBoxLayout
         def create_spinbox(gridlayout, row, column):
