@@ -31,11 +31,14 @@ class RandomAnimationUI(QWidget):
                                                                  trans_min_x, trans_max_x, trans_min_y, trans_max_y, trans_min_z, trans_max_z,
                                                                  rot_min_x, rot_max_x, rot_min_y, rot_max_y, rot_min_z, rot_max_z,
                                                                  scale_min_x, scale_max_x, scale_min_y, scale_max_y, scale_min_z, scale_max_z)
+
+        def delete_animation_keys():
+            WilliamLabine_TP3_animator.delete_animation_keys()
         
         #Crée un QSpinBox et le place dans un QHBoxLayout
         def create_spinbox(gridlayout, row, column):
             self = QSpinBox()
-            self.setMaximum(999999)
+            self.setRange(-9999, 9999)
             gridlayout.addWidget(self, row, column)
             return self
 
@@ -65,6 +68,10 @@ class RandomAnimationUI(QWidget):
         duration = create_spinbox(timing_grid, 0, 1)
         step_text = create_label("    Step (Frames):", timing_grid, 0, 2)
         step = create_spinbox(timing_grid, 0, 3)
+
+        #On set la valeur minimum de duration et step à 1, car elles sont les deux seules spinbox qui ne doivent pas aller en dessous de cette valeur
+        duration.setMinimum(1)
+        step.setMinimum(1)
 
         animation_groupbox = create_groupbox("Animation Timing", timing_grid)
 
@@ -127,8 +134,14 @@ class RandomAnimationUI(QWidget):
 
         #On ajoute le bouton pour générer les animations
         #====================================================================================================
-        generate_button = QPushButton("Generate")
+        generate_button = QPushButton("Generate Animation")
         generate_button.clicked.connect(generate_random_animation)
+
+
+        #On ajoute le bouton pour générer les animations
+        #====================================================================================================
+        delete_keys_button = QPushButton("Delete Animation Keys")
+        delete_keys_button.clicked.connect(delete_animation_keys)
 
 
         #On ajoute tous les layout horizontaux dans le vertical
@@ -137,3 +150,4 @@ class RandomAnimationUI(QWidget):
             layout.addWidget(groupbox)
 
         layout.addWidget(generate_button)
+        layout.addWidget(delete_keys_button)
