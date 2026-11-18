@@ -14,7 +14,7 @@ import WilliamLabine_TP4_ui as ui
 import importlib
 importlib.reload(ui)
 
-# Fonction main ;)
+#Fonction main ;)
 def main():
     global widget
     try:
