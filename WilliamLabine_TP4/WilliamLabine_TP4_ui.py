@@ -41,6 +41,7 @@ class BlenderModifiersInMayaUi(QWidget):
         self.setWindowTitle("Blender Modifiers In Maya")
         self.setMinimumWidth(400)
         self.created_shapes = []
+        self.merged_result = []
         self.create_ui()
 
     def make_array_in_a_line(self):
@@ -78,7 +79,8 @@ class BlenderModifiersInMayaUi(QWidget):
                                                             self.circle_r_offset_spin.value(),
                                                             self.circle_y_offset_spin.value(),
                                                             self.circle_merge_checkbox.isChecked(),
-                                                            self.created_shapes))
+                                                            self.created_shapes,
+                                                            self.merged_result))
         return this_spinbox
 
     def create_doublespinbox(self, function, min, max, gridlayout, row, column):
@@ -97,7 +99,8 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                   self.circle_r_offset_spin.value(),
                                                                   self.circle_y_offset_spin.value(),
                                                                   self.circle_merge_checkbox.isChecked(),
-                                                                  self.created_shapes))
+                                                                  self.created_shapes,
+                                                                  self.merged_result))
         return this_doublespinbox
 
     def create_checkbox(self, function, gridlayout, row, column):
@@ -115,7 +118,8 @@ class BlenderModifiersInMayaUi(QWidget):
                                                              self.circle_r_offset_spin.value(),
                                                              self.circle_y_offset_spin.value(),
                                                              self.circle_merge_checkbox.isChecked(),
-                                                             self.created_shapes))
+                                                             self.created_shapes,
+                                                             self.merged_result))
         return this_checkbox
 
     def create_combobox(self, item01, item02, gridlayout, row, column):
