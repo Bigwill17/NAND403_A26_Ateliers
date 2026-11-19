@@ -8,11 +8,11 @@ absolute_folder_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(absolute_folder_path)
 
 #On importe le fichier du ui
-import WilliamLabine_TP3_ui
+import WilliamLabine_TP3_ui as ui
 
 #On reload le fichier ui pour que Maya ne perde pas la tête
 import importlib
-importlib.reload(WilliamLabine_TP3_ui)
+importlib.reload(ui)
 
 # Fonction main ;)
 def main():
@@ -21,7 +21,7 @@ def main():
         widget.close()
     except Exception:
         pass
-    widget = WilliamLabine_TP3_ui.RandomAnimationUI()
+    widget = ui.RandomAnimationUI()
     widget.show()
 
 main()
