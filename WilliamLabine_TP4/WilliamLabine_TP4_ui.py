@@ -3,6 +3,7 @@ import sys
 from PySide6.QtWidgets import (QWidget,
                                QVBoxLayout,
                                QLabel,
+                               QPushButton,
                                QSpinBox,
                                QDoubleSpinBox,
                                QGroupBox,
@@ -44,12 +45,6 @@ class BlenderModifiersInMayaUi(QWidget):
         self.merged_result = []
         self.create_ui()
 
-    def make_array_in_a_line(self):
-        array.make_array_in_a_line()
-
-    def make_array_in_circle(self):
-        array.make_array_in_circle()
-
     def go_to_line_array_ui(self):
         self.array_stackedwidget.setCurrentIndex(0)
         self.circle_array_combobox.setCurrentIndex(1)
@@ -63,63 +58,26 @@ class BlenderModifiersInMayaUi(QWidget):
         gridlayout.addWidget(this_label, row, column)
         return this_label
 
-    def create_spinbox(self, function, min, max, gridlayout, row, column,):
+    def create_button(self, text, gridlayout, row, column):
+        this_button = QPushButton(text)
+        gridlayout.addWidget(this_button, row, column)
+        return this_button
+
+    def create_spinbox(self, min, max, gridlayout, row, column,):
         this_spinbox = QSpinBox()
         this_spinbox.setRange(min, max)
         gridlayout.addWidget(this_spinbox, row, column)
-        this_spinbox.valueChanged.connect(lambda : function(self.line_x_count_spin.value(),
-                                                            self.line_y_count_spin.value(),
-                                                            self.line_z_count_spin.value(),
-                                                            self.line_x_offset_spin.value(),
-                                                            self.line_y_offset_spin.value(),
-                                                            self.line_z_offset_spin.value(),
-                                                            self.line_merge_checkbox.isChecked(),
-                                                            self.circle_r_count_spin.value(),
-                                                            self.circle_y_count_spin.value(),
-                                                            self.circle_r_offset_spin.value(),
-                                                            self.circle_y_offset_spin.value(),
-                                                            self.circle_merge_checkbox.isChecked(),
-                                                            self.created_shapes,
-                                                            self.merged_result))
         return this_spinbox
 
-    def create_doublespinbox(self, function, min, max, gridlayout, row, column):
+    def create_doublespinbox(self, min, max, gridlayout, row, column):
         this_doublespinbox = QDoubleSpinBox()
         this_doublespinbox.setRange(min, max)
         gridlayout.addWidget(this_doublespinbox, row, column)
-        this_doublespinbox.valueChanged.connect(lambda : function(self.line_x_count_spin.value(),
-                                                                  self.line_y_count_spin.value(),
-                                                                  self.line_z_count_spin.value(),
-                                                                  self.line_x_offset_spin.value(),
-                                                                  self.line_y_offset_spin.value(),
-                                                                  self.line_z_offset_spin.value(),
-                                                                  self.line_merge_checkbox.isChecked(),
-                                                                  self.circle_r_count_spin.value(),
-                                                                  self.circle_y_count_spin.value(),
-                                                                  self.circle_r_offset_spin.value(),
-                                                                  self.circle_y_offset_spin.value(),
-                                                                  self.circle_merge_checkbox.isChecked(),
-                                                                  self.created_shapes,
-                                                                  self.merged_result))
         return this_doublespinbox
 
-    def create_checkbox(self, function, gridlayout, row, column):
+    def create_checkbox(self, gridlayout, row, column):
         this_checkbox = QCheckBox()
         gridlayout.addWidget(this_checkbox, row, column)
-        this_checkbox.stateChanged.connect(lambda : function(self.line_x_count_spin.value(),
-                                                             self.line_y_count_spin.value(),
-                                                             self.line_z_count_spin.value(),
-                                                             self.line_x_offset_spin.value(),
-                                                             self.line_y_offset_spin.value(),
-                                                             self.line_z_offset_spin.value(),
-                                                             self.line_merge_checkbox.isChecked(),
-                                                             self.circle_r_count_spin.value(),
-                                                             self.circle_y_count_spin.value(),
-                                                             self.circle_r_offset_spin.value(),
-                                                             self.circle_y_offset_spin.value(),
-                                                             self.circle_merge_checkbox.isChecked(),
-                                                             self.created_shapes,
-                                                             self.merged_result))
         return this_checkbox
 
     def create_combobox(self, item01, item02, gridlayout, row, column):
@@ -187,13 +145,34 @@ class BlenderModifiersInMayaUi(QWidget):
         self.line_count_gridlayout = QGridLayout()
 
         self.line_x_count_label = self.create_label("X Amount", self.line_count_gridlayout, 0, 0)
-        self.line_x_count_spin = self.create_spinbox(array.make_array_in_a_line, 1, 99, self.line_count_gridlayout, 0, 1)
+        self.line_x_count_spin = self.create_spinbox(1, 99, self.line_count_gridlayout, 0, 1)
+        self.line_x_count_spin.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                                        self.line_y_count_spin.value(),
+                                                                                        self.line_z_count_spin.value(),
+                                                                                        self.line_x_offset_spin.value(),
+                                                                                        self.line_y_offset_spin.value(),
+                                                                                        self.line_z_offset_spin.value(),
+                                                                                        self.created_shapes))
 
         self.line_y_count_label = self.create_label("Y Amount", self.line_count_gridlayout, 1, 0)
-        self.line_y_count_spin = self.create_spinbox(array.make_array_in_a_line, 1, 99, self.line_count_gridlayout, 1, 1)
+        self.line_y_count_spin = self.create_spinbox(1, 99, self.line_count_gridlayout, 1, 1)
+        self.line_y_count_spin.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                                        self.line_y_count_spin.value(),
+                                                                                        self.line_z_count_spin.value(),
+                                                                                        self.line_x_offset_spin.value(),
+                                                                                        self.line_y_offset_spin.value(),
+                                                                                        self.line_z_offset_spin.value(),
+                                                                                        self.created_shapes))
 
         self.line_z_count_label = self.create_label("Z Amount", self.line_count_gridlayout, 2, 0)
-        self.line_z_count_spin = self.create_spinbox(array.make_array_in_a_line, 1, 99, self.line_count_gridlayout, 2, 1)
+        self.line_z_count_spin = self.create_spinbox(1, 99, self.line_count_gridlayout, 2, 1)
+        self.line_z_count_spin.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                                        self.line_y_count_spin.value(),
+                                                                                        self.line_z_count_spin.value(),
+                                                                                        self.line_x_offset_spin.value(),
+                                                                                        self.line_y_offset_spin.value(),
+                                                                                        self.line_z_offset_spin.value(),
+                                                                                        self.created_shapes))
 
         #On crée la box dans laquelle se trouve les counts
         self.line_count_groupbox = self.create_groupbox("Count", self.line_count_gridlayout, line_array_groupbox_list)
@@ -206,13 +185,37 @@ class BlenderModifiersInMayaUi(QWidget):
         self.line_offsets_gridlayout = QGridLayout()
 
         self.line_x_offset_label = self.create_label("X Offset", self.line_offsets_gridlayout, 0, 0)
-        self.line_x_offset_spin = self.create_doublespinbox(array.make_array_in_a_line, -9999, 9999, self.line_offsets_gridlayout, 0, 1)
+        self.line_x_offset_spin = self.create_doublespinbox(-9999, 9999, self.line_offsets_gridlayout, 0, 1)
+        self.line_x_offset_spin.setValue(1.00)
+        self.line_x_offset_spin.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                                         self.line_y_count_spin.value(),
+                                                                                         self.line_z_count_spin.value(),
+                                                                                         self.line_x_offset_spin.value(),
+                                                                                         self.line_y_offset_spin.value(),
+                                                                                         self.line_z_offset_spin.value(),
+                                                                                         self.created_shapes))
 
         self.line_y_offset_label = self.create_label("Y Offset", self.line_offsets_gridlayout, 1, 0)
-        self.line_y_offset_spin = self.create_doublespinbox(array.make_array_in_a_line, -9999, 9999, self.line_offsets_gridlayout, 1, 1)
+        self.line_y_offset_spin = self.create_doublespinbox(-9999, 9999, self.line_offsets_gridlayout, 1, 1)
+        self.line_y_offset_spin.setValue(1.00)
+        self.line_y_offset_spin.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                                         self.line_y_count_spin.value(),
+                                                                                         self.line_z_count_spin.value(),
+                                                                                         self.line_x_offset_spin.value(),
+                                                                                         self.line_y_offset_spin.value(),
+                                                                                         self.line_z_offset_spin.value(),
+                                                                                         self.created_shapes))
 
         self.line_z_offset_label = self.create_label("Z Offset", self.line_offsets_gridlayout, 2, 0)
-        self.line_z_offset_spin = self.create_doublespinbox(array.make_array_in_a_line, -9999, 9999, self.line_offsets_gridlayout, 2, 1)
+        self.line_z_offset_spin = self.create_doublespinbox(-9999, 9999, self.line_offsets_gridlayout, 2, 1)
+        self.line_z_offset_spin.setValue(1.00)
+        self.line_z_offset_spin.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                                         self.line_y_count_spin.value(),
+                                                                                         self.line_z_count_spin.value(),
+                                                                                         self.line_x_offset_spin.value(),
+                                                                                         self.line_y_offset_spin.value(),
+                                                                                         self.line_z_offset_spin.value(),
+                                                                                         self.created_shapes))
 
         #On crée la box dans laquelle se trouve les offsets
         self.line_offsets_groupbox = self.create_groupbox("Offsets", self.line_offsets_gridlayout, line_array_groupbox_list)
@@ -226,10 +229,32 @@ class BlenderModifiersInMayaUi(QWidget):
 
         #On crée le checkbox et son label
         self.line_merge_label = self.create_label("Merge Geometry", self.line_merge_gridlayout, 0, 0)
-        self.line_merge_checkbox = self.create_checkbox(array.make_array_in_a_line, self.line_merge_gridlayout, 0, 1)
+        self.line_merge_checkbox = self.create_checkbox(self.line_merge_gridlayout, 0, 1)
 
         #On crée la box dans laquelle se trouve l'option merge
         self.line_merge_groupbox = self.create_groupbox("Merge", self.line_merge_gridlayout, line_array_groupbox_list)
+
+
+        #Ajout des boutons pour confirmer ou infirmer l'array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra les deux boutons
+        self.line_buttons_gridlayout = QGridLayout()
+
+        #On crée le bouton de confirmation et d'infirmation
+        self.line_cancel_button = self.create_button("Cancel", self.line_buttons_gridlayout, 0, 0)
+        self.line_cancel_button.clicked.connect(lambda : array.cancel(self,
+                                                                      self.created_shapes,
+                                                                      self.merged_result))
+        
+        self.line_accept_button = self.create_button("Accept", self.line_buttons_gridlayout, 0, 1)
+        self.line_accept_button.clicked.connect(lambda : array.confirm(self,
+                                                                       self.line_merge_checkbox.isChecked(),
+                                                                       self.created_shapes,
+                                                                       self.merged_result))
+
+        #On crée la box dans laquelle se trouve les boutons
+        self.line_buttons_groupbox = self.create_groupbox("Confirmation", self.line_buttons_gridlayout, line_array_groupbox_list)
 
 
         #Ajout de tous les groupbox dans le layout d'array en ligne
@@ -273,10 +298,22 @@ class BlenderModifiersInMayaUi(QWidget):
         self.circle_count_gridlayout = QGridLayout()
 
         self.circle_r_count_label = self.create_label("Around Circle Amount", self.circle_count_gridlayout, 0, 0)
-        self.circle_r_count_spin = self.create_spinbox(array.make_array_in_circle, 1, 99,self.circle_count_gridlayout, 0, 1)
+        self.circle_r_count_spin = self.create_spinbox(1, 99,self.circle_count_gridlayout, 0, 1)
+        self.circle_r_count_spin.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+                                                                                          self.circle_y_count_spin.value(),
+                                                                                          self.circle_center_distance_spin.value(),
+                                                                                          self.circle_r_offset_spin.value(),
+                                                                                          self.circle_y_offset_spin.value(),
+                                                                                          self.created_shapes))
 
         self.circle_y_count_label = self.create_label("Y Amount", self.circle_count_gridlayout, 1, 0)
-        self.circle_y_count_spin = self.create_spinbox(array.make_array_in_circle, 1, 99, self.circle_count_gridlayout, 1, 1)
+        self.circle_y_count_spin = self.create_spinbox(1, 99, self.circle_count_gridlayout, 1, 1)
+        self.circle_y_count_spin.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+                                                                                          self.circle_y_count_spin.value(),
+                                                                                          self.circle_center_distance_spin.value(),
+                                                                                          self.circle_r_offset_spin.value(),
+                                                                                          self.circle_y_offset_spin.value(),
+                                                                                          self.created_shapes))
 
         #On crée la box dans laquelle se trouve les counts
         self.circle_count_groupbox = self.create_groupbox("Count", self.circle_count_gridlayout, circle_array_groupbox_list)
@@ -288,11 +325,34 @@ class BlenderModifiersInMayaUi(QWidget):
         #On crée le layout qui contiendra le groupbox des offsets X, Y et Z
         self.circle_offset_gridlayout = QGridLayout()
 
-        self.circle_r_offset_label = self.create_label("Radius Offset", self.circle_offset_gridlayout, 0, 0)
-        self.circle_r_offset_spin = self.create_doublespinbox(array.make_array_in_circle, -9999, 9999, self.circle_offset_gridlayout, 0, 1)
+        self.circle_center_distance_label = self.create_label("Distance to Center", self.circle_offset_gridlayout, 0, 0)
+        self.circle_center_distance_spin = self.create_doublespinbox(-9999, 9999, self.circle_offset_gridlayout, 0, 1)
+        self.circle_center_distance_spin.setValue(1)
+        self.circle_center_distance_spin.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+                                                                                                  self.circle_y_count_spin.value(),
+                                                                                                  self.circle_center_distance_spin.value(),
+                                                                                                  self.circle_r_offset_spin.value(),
+                                                                                                  self.circle_y_offset_spin.value(),
+                                                                                                  self.created_shapes))
+
+        self.circle_r_offset_label = self.create_label("Radius Offset", self.circle_offset_gridlayout, 1, 0)
+        self.circle_r_offset_spin = self.create_doublespinbox(-9999, 9999, self.circle_offset_gridlayout, 1, 1)
+        self.circle_r_offset_spin.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+                                                                                           self.circle_y_count_spin.value(),
+                                                                                           self.circle_center_distance_spin.value(),
+                                                                                           self.circle_r_offset_spin.value(),
+                                                                                           self.circle_y_offset_spin.value(),
+                                                                                           self.created_shapes))
         
-        self.circle_y_offset_label = self.create_label("Y Offset", self.circle_offset_gridlayout, 1, 0)
-        self.circle_y_offset_spin = self.create_doublespinbox(array.make_array_in_circle, -9999, 9999, self.circle_offset_gridlayout, 1, 1)
+        self.circle_y_offset_label = self.create_label("Y Offset", self.circle_offset_gridlayout, 2, 0)
+        self.circle_y_offset_spin = self.create_doublespinbox(-9999, 9999, self.circle_offset_gridlayout, 2, 1)
+        self.circle_y_offset_spin.setValue(1)
+        self.circle_y_offset_spin.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+                                                                                           self.circle_y_count_spin.value(),
+                                                                                           self.circle_center_distance_spin.value(),
+                                                                                           self.circle_r_offset_spin.value(),
+                                                                                           self.circle_y_offset_spin.value(),
+                                                                                           self.created_shapes))
 
         #On crée la box dans laquelle se trouve les offsets
         self.circle_offset_groupbox = self.create_groupbox("Offsets", self.circle_offset_gridlayout, circle_array_groupbox_list)
@@ -306,10 +366,32 @@ class BlenderModifiersInMayaUi(QWidget):
 
         #On crée le checkbox et son label
         self.circle_merge_label = self.create_label("Merge Geometry", self.circle_merge_gridlayout, 0, 0)
-        self.circle_merge_checkbox = self.create_checkbox(array.make_array_in_circle, self.circle_merge_gridlayout, 0, 1)
+        self.circle_merge_checkbox = self.create_checkbox(self.circle_merge_gridlayout, 0, 1)
 
         #On crée la box dans laquelle se trouve l'option merge
         self.circle_merge_groupbox = self.create_groupbox("Merge", self.circle_merge_gridlayout, circle_array_groupbox_list)
+
+
+        #Ajout des boutons de confirmation du circle array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra les deux boutons
+        self.circle_buttons_gridlayout = QGridLayout()
+
+        #On crée le bouton de confirmation et d'infirmation
+        self.circle_cancel_button = self.create_button("Cancel", self.circle_buttons_gridlayout, 0, 0)
+        self.circle_cancel_button.clicked.connect(lambda : array.cancel(self,
+                                                                        self.created_shapes,
+                                                                        self.merged_result))
+        
+        self.circle_accept_button = self.create_button("Accept", self.circle_buttons_gridlayout, 0, 1)
+        self.circle_accept_button.clicked.connect(lambda : array.confirm(self,
+                                                                         self.circle_merge_checkbox.isChecked(),
+                                                                         self.created_shapes,
+                                                                         self.merged_result))
+
+        #On crée la box dans laquelle se trouve les boutons
+        self.cine_buttons_groupbox = self.create_groupbox("Confirmation", self.circle_buttons_gridlayout, circle_array_groupbox_list)
 
 
         #Ajout de tous les groupbox dans le layout d'array en cercle
