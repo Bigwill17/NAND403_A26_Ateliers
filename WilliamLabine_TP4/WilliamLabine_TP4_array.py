@@ -126,3 +126,14 @@ def cancel(self, created_shapes, merged_result):
 
         #On ferme le widget
         self.close()
+
+def import_suzanne():
+
+    #On trouve le path du dossier dans lequel se trouve ce même fichier
+    absolute_folder_path = os.path.dirname(os.path.abspath(__file__))
+
+    #On greffe le fichier de Suzanne au path
+    suzanne_path = absolute_folder_path + "\SM_Suzanne.fbx"
+
+    #On importe Suzanne
+    cmds.file(suzanne_path, i = True)

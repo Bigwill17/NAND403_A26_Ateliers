@@ -101,7 +101,11 @@ class BlenderModifiersInMayaUi(QWidget):
         self.tabs = QTabWidget()
         self.layout.addWidget(self.tabs)
 
-        #On crée la tab
+
+        #Création et arrangement de la tab pour faire des arrays en ligne
+        #====================================================================================================
+
+        #On crée la tab pour les arrays
         self.tab_array = QWidget()
         self.layout_array = QVBoxLayout(self.tab_array)
 
@@ -111,10 +115,6 @@ class BlenderModifiersInMayaUi(QWidget):
         #Ajout du stackedwidget pour les array en ligne ou en cercle
         self.array_stackedwidget = QStackedWidget()
         self.layout_array.addWidget(self.array_stackedwidget)
-
-
-        #Création et arrangement de la tab pour faire des arrays en ligne
-        #====================================================================================================
 
         #On crée la page d'array en ligne
         self.line_array = QWidget()
@@ -407,3 +407,28 @@ class BlenderModifiersInMayaUi(QWidget):
 
         self.array_stackedwidget.addWidget(self.line_array)
         self.array_stackedwidget.addWidget(self.circle_array)
+
+
+        #Création et arrangement de la tab pour importer Suzanne
+        #====================================================================================================
+
+        #On crée la tab pour Suzanne
+        self.tab_suzanne = QWidget()
+        self.layout_suzanne = QVBoxLayout(self.tab_suzanne)
+
+        #Ajout de la tab array dans les tabs
+        self.tabs.addTab(self.tab_suzanne, "Suzanne")
+        
+        
+        #Ajout du bouton pour importer Suzanne
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le bouton de confirmation et d'infirmation
+        self.suzanne_button = QPushButton("Import Suzanne")
+        self.suzanne_button.clicked.connect(array.import_suzanne)
+
+
+        #Ajout de tous les groupbox dans le layout de Suzanne
+        #----------------------------------------------------------------------------------------------------
+
+        self.layout_suzanne.addWidget(self.suzanne_button)
