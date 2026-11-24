@@ -79,6 +79,10 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                               self.line_x_offset_spin.value(),
                                                                               self.line_y_offset_spin.value(),
                                                                               self.line_z_offset_spin.value(),
+                                                                              self.line_trans_random_slider.value(),
+                                                                              self.line_rot_random_slider.value(),
+                                                                              self.line_scale_random_slider.value(),
+                                                                              self.line_seed_spinbox.value(),
                                                                               self.created_shapes))
         return this_spinbox
 
@@ -91,6 +95,10 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                               self.circle_center_distance_spin.value(),
                                                                               self.circle_r_offset_spin.value(),
                                                                               self.circle_y_offset_spin.value(),
+                                                                              self.circle_trans_random_slider.value(),
+                                                                              self.circle_rot_random_slider.value(),
+                                                                              self.circle_scale_random_slider.value(),
+                                                                              self.circle_seed_spinbox.value(),
                                                                               self.created_shapes))
         return this_spinbox
 
@@ -104,6 +112,10 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                                     self.line_x_offset_spin.value(),
                                                                                     self.line_y_offset_spin.value(),
                                                                                     self.line_z_offset_spin.value(),
+                                                                                    self.line_trans_random_slider.value(),
+                                                                                    self.line_rot_random_slider.value(),
+                                                                                    self.line_scale_random_slider.value(),
+                                                                                    self.line_seed_spinbox.value(),
                                                                                     self.created_shapes))
         return this_doublespinbox
 
@@ -116,6 +128,10 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                                     self.circle_center_distance_spin.value(),
                                                                                     self.circle_r_offset_spin.value(),
                                                                                     self.circle_y_offset_spin.value(),
+                                                                                    self.circle_trans_random_slider.value(),
+                                                                                    self.circle_rot_random_slider.value(),
+                                                                                    self.circle_scale_random_slider.value(),
+                                                                                    self.circle_seed_spinbox.value(),
                                                                                     self.created_shapes))
         return this_doublespinbox
 
@@ -130,6 +146,10 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                              self.line_x_offset_spin.value(),
                                                                              self.line_y_offset_spin.value(),
                                                                              self.line_z_offset_spin.value(),
+                                                                             self.line_trans_random_slider.value(),
+                                                                             self.line_rot_random_slider.value(),
+                                                                             self.line_scale_random_slider.value(),
+                                                                             self.line_seed_spinbox.value(),
                                                                              self.created_shapes))
         return this_slider
 
@@ -143,6 +163,10 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                              self.circle_center_distance_spin.value(),
                                                                              self.circle_r_offset_spin.value(),
                                                                              self.circle_y_offset_spin.value(),
+                                                                             self.circle_trans_random_slider.value(),
+                                                                             self.circle_rot_random_slider.value(),
+                                                                             self.circle_scale_random_slider.value(),
+                                                                             self.circle_seed_spinbox.value(),
                                                                              self.created_shapes))
         return this_slider
 
@@ -285,11 +309,11 @@ class BlenderModifiersInMayaUi(QWidget):
         self.line_rot_random_label = self.create_label("Random Rotation", self.line_random_gridlayout, 1, 0)
         self.line_rot_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 1, 1)
 
-        #On crée le slider pour la randomness de translation
+        #On crée le slider pour la randomness de scale
         self.line_scale_random_label = self.create_label("Random Scale", self.line_random_gridlayout, 2, 0)
         self.line_scale_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 2, 1)
 
-        #On crée le slider pour la randomness de translation
+        #On crée le slider pour la uniform randomness
         self.line_uniform_random_label = self.create_label("Uniform Random", self.line_random_gridlayout, 3, 0)
         self.line_uniform_random_slider = self.create_uniform_slider(0, 100, self.line_random_gridlayout, 3, 1)
         self.line_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.line_trans_random_slider,
@@ -297,7 +321,11 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                                           self.line_scale_random_slider,
                                                                                           self.line_uniform_random_slider))
 
-        #On crée la box dans laquelle se trouve l'option merge
+        #On crée la spinbox avec la seed pour la randomness
+        self.line_seed_label = self.create_label("Seed", self.line_random_gridlayout, 4, 0)
+        self.line_seed_spinbox = self.create_line_spinbox(0, 999, self.line_random_gridlayout, 4, 1)
+
+        #On crée la box dans laquelle se trouve l'option de randmoness
         self.line_random_groupbox = self.create_groupbox("Randomness", self.line_random_gridlayout, line_array_groupbox_list)
 
 
@@ -422,11 +450,11 @@ class BlenderModifiersInMayaUi(QWidget):
         self.circle_rot_random_label = self.create_label("Random Rotation", self.circle_random_gridlayout, 1, 0)
         self.circle_rot_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 1, 1)
 
-        #On crée le slider pour la randomness de translation
+        #On crée le slider pour la randomness de scale
         self.circle_scale_random_label = self.create_label("Random Scale", self.circle_random_gridlayout, 2, 0)
         self.circle_scale_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 2, 1)
 
-        #On crée le slider pour la randomness de translation
+        #On crée le slider pour la uniform randmoness
         self.circle_uniform_random_label = self.create_label("Uniform Random", self.circle_random_gridlayout, 3, 0)
         self.circle_uniform_random_slider = self.create_uniform_slider(0, 100, self.circle_random_gridlayout, 3, 1)
         self.circle_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.circle_trans_random_slider,
@@ -434,7 +462,11 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                                           self.circle_scale_random_slider,
                                                                                           self.circle_uniform_random_slider))
 
-        #On crée la box dans laquelle se trouve l'option merge
+        #On crée la spinbox avec la seed pour la randomness
+        self.circle_seed_label = self.create_label("Seed", self.circle_random_gridlayout, 4, 0)
+        self.circle_seed_spinbox = self.create_circle_spinbox(0, 999, self.circle_random_gridlayout, 4, 1)
+
+        #On crée la box dans laquelle se trouve l'option de randomness
         self.circle_random_groupbox = self.create_groupbox("Randomness", self.circle_random_gridlayout, circle_array_groupbox_list)
 
 

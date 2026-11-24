@@ -1,3 +1,4 @@
+import random
 import sys
 import os
 import maya.cmds as cmds
@@ -27,8 +28,9 @@ def ctrlz_chunk():
         #On s'assure de refermer le chunk!
         cmds.undoInfo(closeChunk = True)
 
-def make_array_in_a_line(line_x_count, line_y_count, line_z_count,
-                         line_x_offset, line_y_offset, line_z_offset,
+def make_array_in_a_line(x_count, y_count, z_count,
+                         x_offset, y_offset, z_offset,
+                         trans_random, rot_random, scale_random, seed,
                          created_shapes):
 
     #En utilisant le chunk de control Z, on active toutes nos fonctionnalités
@@ -43,20 +45,36 @@ def make_array_in_a_line(line_x_count, line_y_count, line_z_count,
             cmds.delete(current_shape)
         created_shapes.clear()
 
+        #On set la seed selon la valeur du spinbox
+        random.seed(seed)
+
         #Exécution des boucles pour le line array
-        for zIdx in range(line_z_count):
-            for yIdx in range(line_y_count):
-                for xIdx in range(line_x_count):
+        for zIdx in range(z_count):
+            for yIdx in range(y_count):
+                for xIdx in range(x_count):
                     copy = cmds.duplicate(source)[0]
-                    cmds.move(line_x_offset * xIdx, line_y_offset * yIdx, line_z_offset * zIdx, copy, relative = True)
+                    cmds.move(x_offset * xIdx + (random.uniform(-0.5, 0.5) * trans_random / 100),
+                              y_offset * yIdx + (random.uniform(-0.5, 0.5) * trans_random / 100),
+                              z_offset * zIdx + (random.uniform(-0.5, 0.5) * trans_random / 100),
+                              copy, relative = True)
+                    cmds.rotate((random.uniform(-180, 180) * rot_random / 100),
+                                (random.uniform(-180, 180) * rot_random / 100),
+                                (random.uniform(-180, 180) * rot_random / 100),
+                                copy, relative = True)
+                    random_scale = (random.uniform(-0.5, 0.5) * scale_random / 100) + 1
+                    cmds.scale(random_scale,
+                               random_scale,
+                               random_scale,
+                               copy, relative = True)
                     created_shapes.append(copy)
 
         #On s'assure de toujours avoir l'objet source sélectionné à la fin d'un cycle
         cmds.select(source)
 
 
-def make_array_in_circle(circle_r_count, circle_y_count,
-                         circle_center_distance, circle_r_offset, circle_y_offset,
+def make_array_in_circle(r_count, y_count,
+                         center_distance, r_offset, y_offset,
+                         trans_random, rot_random, scale_random, seed,
                          created_shapes):
 
     #En utilisant le chunk de control Z, on active toutes nos fonctionnalités
@@ -74,12 +92,27 @@ def make_array_in_circle(circle_r_count, circle_y_count,
         #On va chercher le pivot de notre objet source autour duquel on va tourner
         circle_pivot = cmds.xform(source, query = True, worldSpace = True, rotatePivot = True)
 
+        #On set la seed selon la valeur du spinbox
+        random.seed(seed)
+
         #Exécution de la boucle du circle array
-        for yIdx in range(circle_y_count):
-            for rIdx in range(circle_r_count):
+        for yIdx in range(y_count):
+            for rIdx in range(r_count):
                 copy = cmds.duplicate(source)[0]
-                cmds.move(circle_center_distance, circle_y_offset * yIdx, 0, copy, relative = True)
-                cmds.rotate(0, (360 * rIdx / circle_r_count) + (circle_r_offset * yIdx), 0, copy, pivot = circle_pivot, relative = True)
+                cmds.move(center_distance + (random.uniform(-0.5, 0.5) * trans_random / 100),
+                          y_offset * yIdx + (random.uniform(-0.5, 0.5) * trans_random / 100),
+                          (random.uniform(-0.5, 0.5) * trans_random / 100),
+                          copy, relative = True)
+                cmds.rotate((random.uniform(-180, 180) * rot_random / 100),
+                            (random.uniform(-180, 180) * rot_random / 100),
+                            (random.uniform(-180, 180) * rot_random / 100),
+                            copy, relative = True)
+                cmds.rotate(0, (360 * rIdx / r_count) + (r_offset * yIdx), 0, copy, pivot = circle_pivot, relative = True)
+                random_scale = (random.uniform(-0.5, 0.5) * scale_random / 100) + 1
+                cmds.scale(random_scale,
+                            random_scale,
+                            random_scale,
+                            copy, relative = True)
                 created_shapes.append(copy)
 
         #On s'assure de toujours avoir l'objet source sélectionné à la fin d'un cycle
