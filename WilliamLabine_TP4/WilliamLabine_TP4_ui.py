@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QWidget,
                                QPushButton,
                                QSpinBox,
                                QDoubleSpinBox,
+                               QSlider,
                                QGroupBox,
                                QGridLayout,
                                QTabWidget,
@@ -52,6 +53,11 @@ class BlenderModifiersInMayaUi(QWidget):
     def go_to_circle_array_ui(self):
         self.array_stackedwidget.setCurrentIndex(1)
         self.line_array_combobox.setCurrentIndex(0)
+
+    def update_sliders(self, trans_slider, rot_slider, scale_slider, uniform_slider):
+        trans_slider.setValue(uniform_slider.value())
+        rot_slider.setValue(uniform_slider.value())
+        scale_slider.setValue(uniform_slider.value())
 
     def create_label(self, text, gridlayout, row, column):
         this_label = QLabel(text)
@@ -112,6 +118,40 @@ class BlenderModifiersInMayaUi(QWidget):
                                                                                     self.circle_y_offset_spin.value(),
                                                                                     self.created_shapes))
         return this_doublespinbox
+
+    def create_line_slider(self, min, max, gridlayout, row, column):
+        this_slider = QSlider()
+        this_slider.setRange(min, max)
+        this_slider.setOrientation(Qt.Horizontal)
+        gridlayout.addWidget(this_slider, row, column)
+        this_slider.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+                                                                             self.line_y_count_spin.value(),
+                                                                             self.line_z_count_spin.value(),
+                                                                             self.line_x_offset_spin.value(),
+                                                                             self.line_y_offset_spin.value(),
+                                                                             self.line_z_offset_spin.value(),
+                                                                             self.created_shapes))
+        return this_slider
+
+    def create_circle_slider(self, min, max, gridlayout, row, column):
+        this_slider = QSlider()
+        this_slider.setRange(min, max)
+        gridlayout.addWidget(this_slider, row, column)
+        this_slider.setOrientation(Qt.Horizontal)
+        this_slider.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+                                                                             self.circle_y_count_spin.value(),
+                                                                             self.circle_center_distance_spin.value(),
+                                                                             self.circle_r_offset_spin.value(),
+                                                                             self.circle_y_offset_spin.value(),
+                                                                             self.created_shapes))
+        return this_slider
+
+    def create_uniform_slider(self, min, max, gridlayout, row, column):
+        this_slider = QSlider()
+        this_slider.setRange(min, max)
+        gridlayout.addWidget(this_slider, row, column)
+        this_slider.setOrientation(Qt.Horizontal)
+        return this_slider
 
     def create_checkbox(self, gridlayout, row, column):
         this_checkbox = QCheckBox()
@@ -231,6 +271,36 @@ class BlenderModifiersInMayaUi(QWidget):
         self.line_merge_groupbox = self.create_groupbox("Merge", self.line_merge_gridlayout, line_array_groupbox_list)
 
 
+        #Ajout du groupbox avec les options de randomness
+        #----------------------------------------------------------------------------------------------------
+        
+        #On crée le layout qui contiendra le groupbox du randomness
+        self.line_random_gridlayout = QGridLayout()
+
+        #On crée le slider pour la randomness de translation
+        self.line_trans_random_label = self.create_label("Random Translation", self.line_random_gridlayout, 0, 0)
+        self.line_trans_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 0, 1)
+
+        #On crée le slider pour la randomness de rotation
+        self.line_rot_random_label = self.create_label("Random Rotation", self.line_random_gridlayout, 1, 0)
+        self.line_rot_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 1, 1)
+
+        #On crée le slider pour la randomness de translation
+        self.line_scale_random_label = self.create_label("Random Scale", self.line_random_gridlayout, 2, 0)
+        self.line_scale_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 2, 1)
+
+        #On crée le slider pour la randomness de translation
+        self.line_uniform_random_label = self.create_label("Uniform Random", self.line_random_gridlayout, 3, 0)
+        self.line_uniform_random_slider = self.create_uniform_slider(0, 100, self.line_random_gridlayout, 3, 1)
+        self.line_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.line_trans_random_slider,
+                                                                                          self.line_rot_random_slider,
+                                                                                          self.line_scale_random_slider,
+                                                                                          self.line_uniform_random_slider))
+
+        #On crée la box dans laquelle se trouve l'option merge
+        self.line_random_groupbox = self.create_groupbox("Randomness", self.line_random_gridlayout, line_array_groupbox_list)
+
+
         #Ajout des boutons pour confirmer ou infirmer l'array
         #----------------------------------------------------------------------------------------------------
 
@@ -336,6 +406,36 @@ class BlenderModifiersInMayaUi(QWidget):
 
         #On crée la box dans laquelle se trouve l'option merge
         self.circle_merge_groupbox = self.create_groupbox("Merge", self.circle_merge_gridlayout, circle_array_groupbox_list)
+
+
+        #Ajout du groupbox circle avec les options de randomness
+        #----------------------------------------------------------------------------------------------------
+        
+        #On crée le layout qui contiendra le groupbox du randomness
+        self.circle_random_gridlayout = QGridLayout()
+
+        #On crée le slider pour la randomness de translation
+        self.circle_trans_random_label = self.create_label("Random Translation", self.circle_random_gridlayout, 0, 0)
+        self.circle_trans_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 0, 1)
+
+        #On crée le slider pour la randomness de rotation
+        self.circle_rot_random_label = self.create_label("Random Rotation", self.circle_random_gridlayout, 1, 0)
+        self.circle_rot_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 1, 1)
+
+        #On crée le slider pour la randomness de translation
+        self.circle_scale_random_label = self.create_label("Random Scale", self.circle_random_gridlayout, 2, 0)
+        self.circle_scale_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 2, 1)
+
+        #On crée le slider pour la randomness de translation
+        self.circle_uniform_random_label = self.create_label("Uniform Random", self.circle_random_gridlayout, 3, 0)
+        self.circle_uniform_random_slider = self.create_uniform_slider(0, 100, self.circle_random_gridlayout, 3, 1)
+        self.circle_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.circle_trans_random_slider,
+                                                                                          self.circle_rot_random_slider,
+                                                                                          self.circle_scale_random_slider,
+                                                                                          self.circle_uniform_random_slider))
+
+        #On crée la box dans laquelle se trouve l'option merge
+        self.circle_random_groupbox = self.create_groupbox("Randomness", self.circle_random_gridlayout, circle_array_groupbox_list)
 
 
         #Ajout des boutons de confirmation du circle array
