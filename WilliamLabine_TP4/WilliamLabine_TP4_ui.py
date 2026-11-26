@@ -41,18 +41,208 @@ class BlenderModifiersInMayaUi(QWidget):
         super().__init__(maya_main_window())
         self.setWindowFlags(Qt.Window)
         self.setWindowTitle("Blender Modifiers In Maya")
-        self.setMinimumWidth(400)
+        self.setMinimumWidth(500)
         self.created_shapes = []
         self.merged_result = []
         self.create_ui()
 
     def go_to_line_array_ui(self):
         self.array_stackedwidget.setCurrentIndex(0)
-        self.circle_array_combobox.setCurrentIndex(1)
+        self.line_array_combobox.setCurrentIndex(0)
+        array.select_array(self.line_array_combobox.currentIndex(),
+                           self.line_x_count_spin.value(),
+                           self.line_y_count_spin.value(),
+                           self.line_z_count_spin.value(),
+                           self.line_x_offset_spin.value(),
+                           self.line_y_offset_spin.value(),
+                           self.line_z_offset_spin.value(),
+                           self.line_start_x_trans_spin.value(),
+                           self.line_end_x_trans_spin.value(),
+                           self.line_start_y_trans_spin.value(),
+                           self.line_end_y_trans_spin.value(),
+                           self.line_start_z_trans_spin.value(),
+                           self.line_end_z_trans_spin.value(),
+                           self.line_start_x_rot_spin.value(),
+                           self.line_end_x_rot_spin.value(),
+                           self.line_start_y_rot_spin.value(),
+                           self.line_end_y_rot_spin.value(),
+                           self.line_start_z_rot_spin.value(),
+                           self.line_end_z_rot_spin.value(),
+                           self.line_start_scale_spin.value(),
+                           self.line_end_scale_spin.value(),
+                           self.circle_r_count_spin.value(),
+                           self.circle_y_count_spin.value(),
+                           self.circle_center_distance_spin.value(),
+                           self.circle_r_offset_spin.value(),
+                           self.circle_y_offset_spin.value(),
+                           self.circle_start_x_trans_spin.value(),
+                           self.circle_end_x_trans_spin.value(),
+                           self.circle_start_y_trans_spin.value(),
+                           self.circle_end_y_trans_spin.value(),
+                           self.circle_start_z_trans_spin.value(),
+                           self.circle_end_z_trans_spin.value(),
+                           self.circle_start_x_rot_spin.value(),
+                           self.circle_end_x_rot_spin.value(),
+                           self.circle_start_y_rot_spin.value(),
+                           self.circle_end_y_rot_spin.value(),
+                           self.circle_start_z_rot_spin.value(),
+                           self.circle_end_z_rot_spin.value(),
+                           self.circle_start_scale_spin.value(),
+                           self.circle_end_scale_spin.value(),
+                           self.trans_random_slider.value(),
+                           self.rot_random_slider.value(),
+                           self.scale_random_slider.value(),
+                           self.seed_spinbox.value(),
+                           self.created_shapes)
 
     def go_to_circle_array_ui(self):
         self.array_stackedwidget.setCurrentIndex(1)
-        self.line_array_combobox.setCurrentIndex(0)
+        self.circle_array_combobox.setCurrentIndex(1)
+        array.select_array(self.line_array_combobox.currentIndex(),
+                           self.line_x_count_spin.value(),
+                           self.line_y_count_spin.value(),
+                           self.line_z_count_spin.value(),
+                           self.line_x_offset_spin.value(),
+                           self.line_y_offset_spin.value(),
+                           self.line_z_offset_spin.value(),
+                           self.line_start_x_trans_spin.value(),
+                           self.line_end_x_trans_spin.value(),
+                           self.line_start_y_trans_spin.value(),
+                           self.line_end_y_trans_spin.value(),
+                           self.line_start_z_trans_spin.value(),
+                           self.line_end_z_trans_spin.value(),
+                           self.line_start_x_rot_spin.value(),
+                           self.line_end_x_rot_spin.value(),
+                           self.line_start_y_rot_spin.value(),
+                           self.line_end_y_rot_spin.value(),
+                           self.line_start_z_rot_spin.value(),
+                           self.line_end_z_rot_spin.value(),
+                           self.line_start_scale_spin.value(),
+                           self.line_end_scale_spin.value(),
+                           self.circle_r_count_spin.value(),
+                           self.circle_y_count_spin.value(),
+                           self.circle_center_distance_spin.value(),
+                           self.circle_r_offset_spin.value(),
+                           self.circle_y_offset_spin.value(),
+                           self.circle_start_x_trans_spin.value(),
+                           self.circle_end_x_trans_spin.value(),
+                           self.circle_start_y_trans_spin.value(),
+                           self.circle_end_y_trans_spin.value(),
+                           self.circle_start_z_trans_spin.value(),
+                           self.circle_end_z_trans_spin.value(),
+                           self.circle_start_x_rot_spin.value(),
+                           self.circle_end_x_rot_spin.value(),
+                           self.circle_start_y_rot_spin.value(),
+                           self.circle_end_y_rot_spin.value(),
+                           self.circle_start_z_rot_spin.value(),
+                           self.circle_end_z_rot_spin.value(),
+                           self.circle_start_scale_spin.value(),
+                           self.circle_end_scale_spin.value(),
+                           self.trans_random_slider.value(),
+                           self.rot_random_slider.value(),
+                           self.scale_random_slider.value(),
+                           self.seed_spinbox.value(),
+                           self.created_shapes)
+
+    def connect_to_select_array(self, this_widget):
+        this_widget.valueChanged.connect(lambda : array.select_array(self.line_array_combobox.currentIndex(),
+                                                                     self.line_x_count_spin.value(),
+                                                                     self.line_y_count_spin.value(),
+                                                                     self.line_z_count_spin.value(),
+                                                                     self.line_x_offset_spin.value(),
+                                                                     self.line_y_offset_spin.value(),
+                                                                     self.line_z_offset_spin.value(),
+                                                                     self.line_start_x_trans_spin.value(),
+                                                                     self.line_end_x_trans_spin.value(),
+                                                                     self.line_start_y_trans_spin.value(),
+                                                                     self.line_end_y_trans_spin.value(),
+                                                                     self.line_start_z_trans_spin.value(),
+                                                                     self.line_end_z_trans_spin.value(),
+                                                                     self.line_start_x_rot_spin.value(),
+                                                                     self.line_end_x_rot_spin.value(),
+                                                                     self.line_start_y_rot_spin.value(),
+                                                                     self.line_end_y_rot_spin.value(),
+                                                                     self.line_start_z_rot_spin.value(),
+                                                                     self.line_end_z_rot_spin.value(),
+                                                                     self.line_start_scale_spin.value(),
+                                                                     self.line_end_scale_spin.value(),
+                                                                     self.circle_r_count_spin.value(),
+                                                                     self.circle_y_count_spin.value(),
+                                                                     self.circle_center_distance_spin.value(),
+                                                                     self.circle_r_offset_spin.value(),
+                                                                     self.circle_y_offset_spin.value(),
+                                                                     self.circle_start_x_trans_spin.value(),
+                                                                     self.circle_end_x_trans_spin.value(),
+                                                                     self.circle_start_y_trans_spin.value(),
+                                                                     self.circle_end_y_trans_spin.value(),
+                                                                     self.circle_start_z_trans_spin.value(),
+                                                                     self.circle_end_z_trans_spin.value(),
+                                                                     self.circle_start_x_rot_spin.value(),
+                                                                     self.circle_end_x_rot_spin.value(),
+                                                                     self.circle_start_y_rot_spin.value(),
+                                                                     self.circle_end_y_rot_spin.value(),
+                                                                     self.circle_start_z_rot_spin.value(),
+                                                                     self.circle_end_z_rot_spin.value(),
+                                                                     self.circle_start_scale_spin.value(),
+                                                                     self.circle_end_scale_spin.value(),
+                                                                     self.trans_random_slider.value(),
+                                                                     self.rot_random_slider.value(),
+                                                                     self.scale_random_slider.value(),
+                                                                     self.seed_spinbox.value(),
+                                                                     self.created_shapes))
+
+    # def connect_to_line_array(self, this_widget):
+    #     this_widget.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
+    #                                                                          self.line_y_count_spin.value(),
+    #                                                                          self.line_z_count_spin.value(),
+    #                                                                          self.line_x_offset_spin.value(),
+    #                                                                          self.line_y_offset_spin.value(),
+    #                                                                          self.line_z_offset_spin.value(),
+    #                                                                          self.line_start_x_trans_spin.value(),
+    #                                                                          self.line_end_x_trans_spin.value(),
+    #                                                                          self.line_start_y_trans_spin.value(),
+    #                                                                          self.line_end_y_trans_spin.value(),
+    #                                                                          self.line_start_z_trans_spin.value(),
+    #                                                                          self.line_end_z_trans_spin.value(),
+    #                                                                          self.line_start_x_rot_spin.value(),
+    #                                                                          self.line_end_x_rot_spin.value(),
+    #                                                                          self.line_start_y_rot_spin.value(),
+    #                                                                          self.line_end_y_rot_spin.value(),
+    #                                                                          self.line_start_z_rot_spin.value(),
+    #                                                                          self.line_end_z_rot_spin.value(),
+    #                                                                          self.line_start_scale_spin.value(),
+    #                                                                          self.line_end_scale_spin.value(),
+    #                                                                          self.trans_random_slider.value(),
+    #                                                                          self.rot_random_slider.value(),
+    #                                                                          self.scale_random_slider.value(),
+    #                                                                          self.seed_spinbox.value(),
+    #                                                                          self.created_shapes))
+
+    # def connect_to_circle_array(self, this_widget):
+    #     this_widget.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
+    #                                                                          self.circle_y_count_spin.value(),
+    #                                                                          self.circle_center_distance_spin.value(),
+    #                                                                          self.circle_r_offset_spin.value(),
+    #                                                                          self.circle_y_offset_spin.value(),
+    #                                                                          self.circle_start_x_trans_spin.value(),
+    #                                                                          self.circle_end_x_trans_spin.value(),
+    #                                                                          self.circle_start_y_trans_spin.value(),
+    #                                                                          self.circle_end_y_trans_spin.value(),
+    #                                                                          self.circle_start_z_trans_spin.value(),
+    #                                                                          self.circle_end_z_trans_spin.value(),
+    #                                                                          self.circle_start_x_rot_spin.value(),
+    #                                                                          self.circle_end_x_rot_spin.value(),
+    #                                                                          self.circle_start_y_rot_spin.value(),
+    #                                                                          self.circle_end_y_rot_spin.value(),
+    #                                                                          self.circle_start_z_rot_spin.value(),
+    #                                                                          self.circle_end_z_rot_spin.value(),
+    #                                                                          self.circle_start_scale_spin.value(),
+    #                                                                          self.circle_end_scale_spin.value(),
+    #                                                                          self.trans_random_slider.value(),
+    #                                                                          self.rot_random_slider.value(),
+    #                                                                          self.scale_random_slider.value(),
+    #                                                                          self.seed_spinbox.value(),
+    #                                                                          self.created_shapes))
 
     def update_sliders(self, trans_slider, rot_slider, scale_slider, uniform_slider):
         trans_slider.setValue(uniform_slider.value())
@@ -73,66 +263,24 @@ class BlenderModifiersInMayaUi(QWidget):
         this_spinbox = QSpinBox()
         this_spinbox.setRange(min, max)
         gridlayout.addWidget(this_spinbox, row, column)
-        this_spinbox.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
-                                                                              self.line_y_count_spin.value(),
-                                                                              self.line_z_count_spin.value(),
-                                                                              self.line_x_offset_spin.value(),
-                                                                              self.line_y_offset_spin.value(),
-                                                                              self.line_z_offset_spin.value(),
-                                                                              self.line_trans_random_slider.value(),
-                                                                              self.line_rot_random_slider.value(),
-                                                                              self.line_scale_random_slider.value(),
-                                                                              self.line_seed_spinbox.value(),
-                                                                              self.created_shapes))
         return this_spinbox
 
     def create_circle_spinbox(self, min, max, gridlayout, row, column,):
         this_spinbox = QSpinBox()
         this_spinbox.setRange(min, max)
         gridlayout.addWidget(this_spinbox, row, column)
-        this_spinbox.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
-                                                                              self.circle_y_count_spin.value(),
-                                                                              self.circle_center_distance_spin.value(),
-                                                                              self.circle_r_offset_spin.value(),
-                                                                              self.circle_y_offset_spin.value(),
-                                                                              self.circle_trans_random_slider.value(),
-                                                                              self.circle_rot_random_slider.value(),
-                                                                              self.circle_scale_random_slider.value(),
-                                                                              self.circle_seed_spinbox.value(),
-                                                                              self.created_shapes))
         return this_spinbox
 
     def create_line_doublespinbox(self, min, max, gridlayout, row, column):
         this_doublespinbox = QDoubleSpinBox()
         this_doublespinbox.setRange(min, max)
         gridlayout.addWidget(this_doublespinbox, row, column)
-        this_doublespinbox.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
-                                                                                    self.line_y_count_spin.value(),
-                                                                                    self.line_z_count_spin.value(),
-                                                                                    self.line_x_offset_spin.value(),
-                                                                                    self.line_y_offset_spin.value(),
-                                                                                    self.line_z_offset_spin.value(),
-                                                                                    self.line_trans_random_slider.value(),
-                                                                                    self.line_rot_random_slider.value(),
-                                                                                    self.line_scale_random_slider.value(),
-                                                                                    self.line_seed_spinbox.value(),
-                                                                                    self.created_shapes))
         return this_doublespinbox
 
     def create_circle_doublespinbox(self, min, max, gridlayout, row, column):
         this_doublespinbox = QDoubleSpinBox()
         this_doublespinbox.setRange(min, max)
         gridlayout.addWidget(this_doublespinbox, row, column)
-        this_doublespinbox.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
-                                                                                    self.circle_y_count_spin.value(),
-                                                                                    self.circle_center_distance_spin.value(),
-                                                                                    self.circle_r_offset_spin.value(),
-                                                                                    self.circle_y_offset_spin.value(),
-                                                                                    self.circle_trans_random_slider.value(),
-                                                                                    self.circle_rot_random_slider.value(),
-                                                                                    self.circle_scale_random_slider.value(),
-                                                                                    self.circle_seed_spinbox.value(),
-                                                                                    self.created_shapes))
         return this_doublespinbox
 
     def create_line_slider(self, min, max, gridlayout, row, column):
@@ -140,17 +288,6 @@ class BlenderModifiersInMayaUi(QWidget):
         this_slider.setRange(min, max)
         this_slider.setOrientation(Qt.Horizontal)
         gridlayout.addWidget(this_slider, row, column)
-        this_slider.valueChanged.connect(lambda : array.make_array_in_a_line(self.line_x_count_spin.value(),
-                                                                             self.line_y_count_spin.value(),
-                                                                             self.line_z_count_spin.value(),
-                                                                             self.line_x_offset_spin.value(),
-                                                                             self.line_y_offset_spin.value(),
-                                                                             self.line_z_offset_spin.value(),
-                                                                             self.line_trans_random_slider.value(),
-                                                                             self.line_rot_random_slider.value(),
-                                                                             self.line_scale_random_slider.value(),
-                                                                             self.line_seed_spinbox.value(),
-                                                                             self.created_shapes))
         return this_slider
 
     def create_circle_slider(self, min, max, gridlayout, row, column):
@@ -158,16 +295,6 @@ class BlenderModifiersInMayaUi(QWidget):
         this_slider.setRange(min, max)
         gridlayout.addWidget(this_slider, row, column)
         this_slider.setOrientation(Qt.Horizontal)
-        this_slider.valueChanged.connect(lambda : array.make_array_in_circle(self.circle_r_count_spin.value(),
-                                                                             self.circle_y_count_spin.value(),
-                                                                             self.circle_center_distance_spin.value(),
-                                                                             self.circle_r_offset_spin.value(),
-                                                                             self.circle_y_offset_spin.value(),
-                                                                             self.circle_trans_random_slider.value(),
-                                                                             self.circle_rot_random_slider.value(),
-                                                                             self.circle_scale_random_slider.value(),
-                                                                             self.circle_seed_spinbox.value(),
-                                                                             self.created_shapes))
         return this_slider
 
     def create_uniform_slider(self, min, max, gridlayout, row, column):
@@ -248,12 +375,15 @@ class BlenderModifiersInMayaUi(QWidget):
 
         self.line_x_count_label = self.create_label("X Amount", self.line_count_gridlayout, 0, 0)
         self.line_x_count_spin = self.create_line_spinbox(1, 99, self.line_count_gridlayout, 0, 1)
+        self.connect_to_select_array(self.line_x_count_spin)
 
         self.line_y_count_label = self.create_label("Y Amount", self.line_count_gridlayout, 1, 0)
         self.line_y_count_spin = self.create_line_spinbox(1, 99, self.line_count_gridlayout, 1, 1)
+        self.connect_to_select_array(self.line_y_count_spin)
 
         self.line_z_count_label = self.create_label("Z Amount", self.line_count_gridlayout, 2, 0)
         self.line_z_count_spin = self.create_line_spinbox(1, 99, self.line_count_gridlayout, 2, 1)
+        self.connect_to_select_array(self.line_z_count_spin)
 
         #On crée la box dans laquelle se trouve les counts
         self.line_count_groupbox = self.create_groupbox("Count", self.line_count_gridlayout, line_array_groupbox_list)
@@ -268,17 +398,143 @@ class BlenderModifiersInMayaUi(QWidget):
         self.line_x_offset_label = self.create_label("X Offset", self.line_offsets_gridlayout, 0, 0)
         self.line_x_offset_spin = self.create_line_doublespinbox(-9999, 9999, self.line_offsets_gridlayout, 0, 1)
         self.line_x_offset_spin.setValue(1.00)
+        self.connect_to_select_array(self.line_x_offset_spin)
 
         self.line_y_offset_label = self.create_label("Y Offset", self.line_offsets_gridlayout, 1, 0)
         self.line_y_offset_spin = self.create_line_doublespinbox(-9999, 9999, self.line_offsets_gridlayout, 1, 1)
         self.line_y_offset_spin.setValue(1.00)
+        self.connect_to_select_array(self.line_y_offset_spin)
 
         self.line_z_offset_label = self.create_label("Z Offset", self.line_offsets_gridlayout, 2, 0)
         self.line_z_offset_spin = self.create_line_doublespinbox(-9999, 9999, self.line_offsets_gridlayout, 2, 1)
         self.line_z_offset_spin.setValue(1.00)
+        self.connect_to_select_array(self.line_z_offset_spin)
 
         #On crée la box dans laquelle se trouve les offsets
         self.line_offsets_groupbox = self.create_groupbox("Offsets", self.line_offsets_gridlayout, line_array_groupbox_list)
+
+
+        #Ajout du groupbox avec les options de randomness
+        #----------------------------------------------------------------------------------------------------
+        
+        # #On crée le layout qui contiendra le groupbox du randomness
+        # self.line_random_gridlayout = QGridLayout()
+
+        # #On crée le slider pour la randomness de translation
+        # self.line_trans_random_label = self.create_label("Random Translation", self.line_random_gridlayout, 0, 0)
+        # self.line_trans_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 0, 1)
+        # self.connect_to_line_array(self.line_trans_random_slider)
+
+        # #On crée le slider pour la randomness de rotation
+        # self.line_rot_random_label = self.create_label("Random Rotation", self.line_random_gridlayout, 1, 0)
+        # self.line_rot_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 1, 1)
+        # self.connect_to_line_array(self.line_rot_random_slider)
+
+        # #On crée le slider pour la randomness de scale
+        # self.line_scale_random_label = self.create_label("Random Scale", self.line_random_gridlayout, 2, 0)
+        # self.line_scale_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 2, 1)
+        # self.connect_to_line_array(self.line_scale_random_slider)
+
+        # #On crée le slider pour la uniform randomness
+        # self.line_uniform_random_label = self.create_label("Uniform Random", self.line_random_gridlayout, 3, 0)
+        # self.line_uniform_random_slider = self.create_uniform_slider(0, 100, self.line_random_gridlayout, 3, 1)
+        # self.line_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.line_trans_random_slider,
+        #                                                                                   self.line_rot_random_slider,
+        #                                                                                   self.line_scale_random_slider,
+        #                                                                                   self.line_uniform_random_slider))
+
+        # #On crée la spinbox avec la seed pour la randomness
+        # self.line_seed_label = self.create_label("Seed", self.line_random_gridlayout, 4, 0)
+        # self.line_seed_spinbox = self.create_line_spinbox(0, 999, self.line_random_gridlayout, 4, 1)
+        # self.connect_to_line_array(self.line_seed_spinbox)
+
+        # #On crée la box dans laquelle se trouve l'option de randmoness
+        # self.line_random_groupbox = self.create_groupbox("Randomness", self.line_random_gridlayout, line_array_groupbox_list)
+
+
+        #Ajout de configurations start/end pour la translation du line array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end translation
+        self.line_startend_trans_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end translation
+        self.line_start_x_trans_label = self.create_label("Start X Translation", self.line_startend_trans_gridlayout, 0, 0)
+        self.line_start_x_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_trans_gridlayout, 0, 1)
+        self.connect_to_select_array(self.line_start_x_trans_spin)
+        self.line_end_x_trans_label = self.create_label("End X Translation", self.line_startend_trans_gridlayout, 0, 2)
+        self.line_end_x_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_trans_gridlayout, 0, 3)
+        self.connect_to_select_array(self.line_end_x_trans_spin)
+
+        self.line_start_y_trans_label = self.create_label("Start Y Translation", self.line_startend_trans_gridlayout, 1, 0)
+        self.line_start_y_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_trans_gridlayout, 1, 1)
+        self.connect_to_select_array(self.line_start_y_trans_spin)
+        self.line_end_y_trans_label = self.create_label("End Y Translation", self.line_startend_trans_gridlayout, 1, 2)
+        self.line_end_y_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_trans_gridlayout, 1, 3)
+        self.connect_to_select_array(self.line_end_y_trans_spin)
+
+        self.line_start_z_trans_label = self.create_label("Start Z Translation", self.line_startend_trans_gridlayout, 2, 0)
+        self.line_start_z_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_trans_gridlayout, 2, 1)
+        self.connect_to_select_array(self.line_start_z_trans_spin)
+        self.line_end_z_trans_label = self.create_label("End Z Translation", self.line_startend_trans_gridlayout, 2, 2)
+        self.line_end_z_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_trans_gridlayout, 2, 3)
+        self.connect_to_select_array(self.line_end_z_trans_spin)
+
+        #On crée la box dans laquelle se trouve le start/end translation
+        self.line_startend_trans_groupbox = self.create_groupbox("Start/End Translation", self.line_startend_trans_gridlayout, line_array_groupbox_list)
+
+
+        #Ajout de configurations start/end pour la rotation du line array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end rotation
+        self.line_startend_rot_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end rotation
+        self.line_start_x_rot_label = self.create_label("Start X Rotation", self.line_startend_rot_gridlayout, 0, 0)
+        self.line_start_x_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_rot_gridlayout, 0, 1)
+        self.connect_to_select_array(self.line_start_x_rot_spin)
+        self.line_end_x_rot_label = self.create_label("End X Rotation", self.line_startend_rot_gridlayout, 0, 2)
+        self.line_end_x_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_rot_gridlayout, 0, 3)
+        self.connect_to_select_array(self.line_end_x_rot_spin)
+
+        self.line_start_y_rot_label = self.create_label("Start Y Rotation", self.line_startend_rot_gridlayout, 1, 0)
+        self.line_start_y_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_rot_gridlayout, 1, 1)
+        self.connect_to_select_array(self.line_start_y_rot_spin)
+        self.line_end_y_rot_label = self.create_label("End Y Rotation", self.line_startend_rot_gridlayout, 1, 2)
+        self.line_end_y_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_rot_gridlayout, 1, 3)
+        self.connect_to_select_array(self.line_end_y_rot_spin)
+
+        self.line_start_z_rot_label = self.create_label("Start Z Rotation", self.line_startend_rot_gridlayout, 2, 0)
+        self.line_start_z_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_rot_gridlayout, 2, 1)
+        self.connect_to_select_array(self.line_start_z_rot_spin)
+        self.line_end_z_rot_label = self.create_label("End Z Rotation", self.line_startend_rot_gridlayout, 2, 2)
+        self.line_end_z_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_rot_gridlayout, 2, 3)
+        self.connect_to_select_array(self.line_end_z_rot_spin)
+
+        #On crée la box dans laquelle se trouve le start/end scale
+        self.line_startend_rot_groupbox = self.create_groupbox("Start/End Rotation", self.line_startend_rot_gridlayout, line_array_groupbox_list)
+
+
+        #Ajout de configurations start/end pour le scale du line array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end scale
+        self.line_startend_scale_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end scale
+        self.line_start_scale_label = self.create_label("Start Scale", self.line_startend_scale_gridlayout, 0, 0)
+        self.line_start_scale_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_scale_gridlayout, 0, 1)
+        self.line_start_scale_spin.setValue(1.00)
+        self.connect_to_select_array(self.line_start_scale_spin)
+
+        self.line_end_scale_label = self.create_label("End Scale", self.line_startend_scale_gridlayout, 0, 2)
+        self.line_end_scale_spin = self.create_line_doublespinbox(-9999, 9999, self.line_startend_scale_gridlayout, 0, 3)
+        self.line_end_scale_spin.setValue(1.00)
+        self.connect_to_select_array(self.line_end_scale_spin)
+
+        #On crée la box dans laquelle se trouve le start/end scale
+        self.line_startend_scale_groupbox = self.create_groupbox("Start/End Scale", self.line_startend_scale_gridlayout, line_array_groupbox_list)
 
 
         #Ajout du groupbox avec l'option merge
@@ -293,40 +549,6 @@ class BlenderModifiersInMayaUi(QWidget):
 
         #On crée la box dans laquelle se trouve l'option merge
         self.line_merge_groupbox = self.create_groupbox("Merge", self.line_merge_gridlayout, line_array_groupbox_list)
-
-
-        #Ajout du groupbox avec les options de randomness
-        #----------------------------------------------------------------------------------------------------
-        
-        #On crée le layout qui contiendra le groupbox du randomness
-        self.line_random_gridlayout = QGridLayout()
-
-        #On crée le slider pour la randomness de translation
-        self.line_trans_random_label = self.create_label("Random Translation", self.line_random_gridlayout, 0, 0)
-        self.line_trans_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 0, 1)
-
-        #On crée le slider pour la randomness de rotation
-        self.line_rot_random_label = self.create_label("Random Rotation", self.line_random_gridlayout, 1, 0)
-        self.line_rot_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 1, 1)
-
-        #On crée le slider pour la randomness de scale
-        self.line_scale_random_label = self.create_label("Random Scale", self.line_random_gridlayout, 2, 0)
-        self.line_scale_random_slider = self.create_line_slider(0, 100, self.line_random_gridlayout, 2, 1)
-
-        #On crée le slider pour la uniform randomness
-        self.line_uniform_random_label = self.create_label("Uniform Random", self.line_random_gridlayout, 3, 0)
-        self.line_uniform_random_slider = self.create_uniform_slider(0, 100, self.line_random_gridlayout, 3, 1)
-        self.line_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.line_trans_random_slider,
-                                                                                          self.line_rot_random_slider,
-                                                                                          self.line_scale_random_slider,
-                                                                                          self.line_uniform_random_slider))
-
-        #On crée la spinbox avec la seed pour la randomness
-        self.line_seed_label = self.create_label("Seed", self.line_random_gridlayout, 4, 0)
-        self.line_seed_spinbox = self.create_line_spinbox(0, 999, self.line_random_gridlayout, 4, 1)
-
-        #On crée la box dans laquelle se trouve l'option de randmoness
-        self.line_random_groupbox = self.create_groupbox("Randomness", self.line_random_gridlayout, line_array_groupbox_list)
 
 
         #Ajout des boutons pour confirmer ou infirmer l'array
@@ -393,9 +615,11 @@ class BlenderModifiersInMayaUi(QWidget):
 
         self.circle_r_count_label = self.create_label("Around Circle Amount", self.circle_count_gridlayout, 0, 0)
         self.circle_r_count_spin = self.create_circle_spinbox(1, 99,self.circle_count_gridlayout, 0, 1)
+        self.connect_to_select_array(self.circle_r_count_spin)
 
         self.circle_y_count_label = self.create_label("Y Amount", self.circle_count_gridlayout, 1, 0)
         self.circle_y_count_spin = self.create_circle_spinbox(1, 99, self.circle_count_gridlayout, 1, 1)
+        self.connect_to_select_array(self.circle_y_count_spin)
 
         #On crée la box dans laquelle se trouve les counts
         self.circle_count_groupbox = self.create_groupbox("Count", self.circle_count_gridlayout, circle_array_groupbox_list)
@@ -410,17 +634,143 @@ class BlenderModifiersInMayaUi(QWidget):
         self.circle_center_distance_label = self.create_label("Distance to Center", self.circle_offset_gridlayout, 0, 0)
         self.circle_center_distance_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_offset_gridlayout, 0, 1)
         self.circle_center_distance_spin.setValue(1)
+        self.connect_to_select_array(self.circle_center_distance_spin)
 
         self.circle_r_offset_label = self.create_label("Radius Offset", self.circle_offset_gridlayout, 1, 0)
         self.circle_r_offset_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_offset_gridlayout, 1, 1)
+        self.connect_to_select_array(self.circle_r_offset_spin)
         
         self.circle_y_offset_label = self.create_label("Y Offset", self.circle_offset_gridlayout, 2, 0)
         self.circle_y_offset_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_offset_gridlayout, 2, 1)
         self.circle_y_offset_spin.setValue(1)
+        self.connect_to_select_array(self.circle_y_offset_spin)
 
         #On crée la box dans laquelle se trouve les offsets
         self.circle_offset_groupbox = self.create_groupbox("Offsets", self.circle_offset_gridlayout, circle_array_groupbox_list)
 
+
+        #Ajout du groupbox circle avec les options de randomness
+        #----------------------------------------------------------------------------------------------------
+        
+        # #On crée le layout qui contiendra le groupbox du randomness
+        # self.circle_random_gridlayout = QGridLayout()
+
+        # #On crée le slider pour la randomness de translation
+        # self.circle_trans_random_label = self.create_label("Random Translation", self.circle_random_gridlayout, 0, 0)
+        # self.circle_trans_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 0, 1)
+        # self.connect_to_circle_array(self.circle_trans_random_slider)
+
+        # #On crée le slider pour la randomness de rotation
+        # self.circle_rot_random_label = self.create_label("Random Rotation", self.circle_random_gridlayout, 1, 0)
+        # self.circle_rot_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 1, 1)
+        # self.connect_to_circle_array(self.circle_rot_random_slider)
+
+        # #On crée le slider pour la randomness de scale
+        # self.circle_scale_random_label = self.create_label("Random Scale", self.circle_random_gridlayout, 2, 0)
+        # self.circle_scale_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 2, 1)
+        # self.connect_to_circle_array(self.circle_scale_random_slider)
+
+        # #On crée le slider pour la uniform randmoness
+        # self.circle_uniform_random_label = self.create_label("Uniform Random", self.circle_random_gridlayout, 3, 0)
+        # self.circle_uniform_random_slider = self.create_uniform_slider(0, 100, self.circle_random_gridlayout, 3, 1)
+        # self.circle_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.circle_trans_random_slider,
+        #                                                                                   self.circle_rot_random_slider,
+        #                                                                                   self.circle_scale_random_slider,
+        #                                                                                   self.circle_uniform_random_slider))
+
+        # #On crée la spinbox avec la seed pour la randomness
+        # self.circle_seed_label = self.create_label("Seed", self.circle_random_gridlayout, 4, 0)
+        # self.circle_seed_spinbox = self.create_circle_spinbox(0, 999, self.circle_random_gridlayout, 4, 1)
+        # self.connect_to_circle_array(self.circle_seed_spinbox)
+
+        # #On crée la box dans laquelle se trouve l'option de randomness
+        # self.circle_random_groupbox = self.create_groupbox("Randomness", self.circle_random_gridlayout, circle_array_groupbox_list)
+
+
+        #Ajout de configurations start/end pour la translation du circle array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end translation
+        self.circle_startend_trans_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end translation
+        self.circle_start_x_trans_label = self.create_label("Start X Translation", self.circle_startend_trans_gridlayout, 0, 0)
+        self.circle_start_x_trans_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_trans_gridlayout, 0, 1)
+        self.connect_to_select_array(self.circle_start_x_trans_spin)
+        self.circle_end_x_trans_label = self.create_label("End X Translation", self.circle_startend_trans_gridlayout, 0, 2)
+        self.circle_end_x_trans_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_trans_gridlayout, 0, 3)
+        self.connect_to_select_array(self.circle_end_x_trans_spin)
+
+        self.circle_start_y_trans_label = self.create_label("Start Y Translation", self.circle_startend_trans_gridlayout, 1, 0)
+        self.circle_start_y_trans_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_trans_gridlayout, 1, 1)
+        self.connect_to_select_array(self.circle_start_y_trans_spin)
+        self.circle_end_y_trans_label = self.create_label("End Y Translation", self.circle_startend_trans_gridlayout, 1, 2)
+        self.circle_end_y_trans_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_trans_gridlayout, 1, 3)
+        self.connect_to_select_array(self.circle_end_y_trans_spin)
+
+        self.circle_start_z_trans_label = self.create_label("Start Z Translation", self.circle_startend_trans_gridlayout, 2, 0)
+        self.circle_start_z_trans_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_trans_gridlayout, 2, 1)
+        self.connect_to_select_array(self.circle_start_z_trans_spin)
+        self.circle_end_z_trans_label = self.create_label("End Z Translation", self.circle_startend_trans_gridlayout, 2, 2)
+        self.circle_end_z_trans_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_trans_gridlayout, 2, 3)
+        self.connect_to_select_array(self.circle_end_z_trans_spin)
+
+        #On crée la box dans laquelle se trouve le start/end translation
+        self.circle_startend_trans_groupbox = self.create_groupbox("Start/End Translation", self.circle_startend_trans_gridlayout, circle_array_groupbox_list)
+
+
+        #Ajout de configurations start/end pour la rotation du circle array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end rotation
+        self.circle_startend_rot_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end rotation
+        self.circle_start_x_rot_label = self.create_label("Start X Rotation", self.circle_startend_rot_gridlayout, 0, 0)
+        self.circle_start_x_rot_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_rot_gridlayout, 0, 1)
+        self.connect_to_select_array(self.circle_start_x_rot_spin)
+        self.circle_end_x_rot_label = self.create_label("End X Rotation", self.circle_startend_rot_gridlayout, 0, 2)
+        self.circle_end_x_rot_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_rot_gridlayout, 0, 3)
+        self.connect_to_select_array(self.circle_end_x_rot_spin)
+
+        self.circle_start_y_rot_label = self.create_label("Start Y Rotation", self.circle_startend_rot_gridlayout, 1, 0)
+        self.circle_start_y_rot_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_rot_gridlayout, 1, 1)
+        self.connect_to_select_array(self.circle_start_y_rot_spin)
+        self.circle_end_y_rot_label = self.create_label("End Y Rotation", self.circle_startend_rot_gridlayout, 1, 2)
+        self.circle_end_y_rot_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_rot_gridlayout, 1, 3)
+        self.connect_to_select_array(self.circle_end_y_rot_spin)
+
+        self.circle_start_z_rot_label = self.create_label("Start Z Rotation", self.circle_startend_rot_gridlayout, 2, 0)
+        self.circle_start_z_rot_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_rot_gridlayout, 2, 1)
+        self.connect_to_select_array(self.circle_start_z_rot_spin)
+        self.circle_end_z_rot_label = self.create_label("End Z Rotation", self.circle_startend_rot_gridlayout, 2, 2)
+        self.circle_end_z_rot_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_rot_gridlayout, 2, 3)
+        self.connect_to_select_array(self.circle_end_z_rot_spin)
+
+        #On crée la box dans laquelle se trouve le start/end scale
+        self.circle_startend_rot_groupbox = self.create_groupbox("Start/End Rotation", self.circle_startend_rot_gridlayout, circle_array_groupbox_list)
+
+
+        #Ajout de configurations start/end pour le scale du circle array
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end scale
+        self.circle_startend_scale_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end scale
+        self.circle_start_scale_label = self.create_label("Start Scale", self.circle_startend_scale_gridlayout, 0, 0)
+        self.circle_start_scale_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_scale_gridlayout, 0, 1)
+        self.circle_start_scale_spin.setValue(1.00)
+        self.connect_to_select_array(self.circle_start_scale_spin)
+
+        self.circle_end_scale_label = self.create_label("End Scale", self.circle_startend_scale_gridlayout, 0, 2)
+        self.circle_end_scale_spin = self.create_circle_doublespinbox(-9999, 9999, self.circle_startend_scale_gridlayout, 0, 3)
+        self.circle_end_scale_spin.setValue(1.00)
+        self.connect_to_select_array(self.circle_end_scale_spin)
+
+        #On crée la box dans laquelle se trouve le start/end scale
+        self.line_startend_scale_groupbox = self.create_groupbox("Start/End Scale", self.circle_startend_scale_gridlayout, circle_array_groupbox_list)
+        
 
         #Ajout du groupbox avec l'option merge
         #----------------------------------------------------------------------------------------------------
@@ -435,41 +785,7 @@ class BlenderModifiersInMayaUi(QWidget):
         #On crée la box dans laquelle se trouve l'option merge
         self.circle_merge_groupbox = self.create_groupbox("Merge", self.circle_merge_gridlayout, circle_array_groupbox_list)
 
-
-        #Ajout du groupbox circle avec les options de randomness
-        #----------------------------------------------------------------------------------------------------
         
-        #On crée le layout qui contiendra le groupbox du randomness
-        self.circle_random_gridlayout = QGridLayout()
-
-        #On crée le slider pour la randomness de translation
-        self.circle_trans_random_label = self.create_label("Random Translation", self.circle_random_gridlayout, 0, 0)
-        self.circle_trans_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 0, 1)
-
-        #On crée le slider pour la randomness de rotation
-        self.circle_rot_random_label = self.create_label("Random Rotation", self.circle_random_gridlayout, 1, 0)
-        self.circle_rot_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 1, 1)
-
-        #On crée le slider pour la randomness de scale
-        self.circle_scale_random_label = self.create_label("Random Scale", self.circle_random_gridlayout, 2, 0)
-        self.circle_scale_random_slider = self.create_circle_slider(0, 100, self.circle_random_gridlayout, 2, 1)
-
-        #On crée le slider pour la uniform randmoness
-        self.circle_uniform_random_label = self.create_label("Uniform Random", self.circle_random_gridlayout, 3, 0)
-        self.circle_uniform_random_slider = self.create_uniform_slider(0, 100, self.circle_random_gridlayout, 3, 1)
-        self.circle_uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.circle_trans_random_slider,
-                                                                                          self.circle_rot_random_slider,
-                                                                                          self.circle_scale_random_slider,
-                                                                                          self.circle_uniform_random_slider))
-
-        #On crée la spinbox avec la seed pour la randomness
-        self.circle_seed_label = self.create_label("Seed", self.circle_random_gridlayout, 4, 0)
-        self.circle_seed_spinbox = self.create_circle_spinbox(0, 999, self.circle_random_gridlayout, 4, 1)
-
-        #On crée la box dans laquelle se trouve l'option de randomness
-        self.circle_random_groupbox = self.create_groupbox("Randomness", self.circle_random_gridlayout, circle_array_groupbox_list)
-
-
         #Ajout des boutons de confirmation du circle array
         #----------------------------------------------------------------------------------------------------
 
@@ -505,6 +821,161 @@ class BlenderModifiersInMayaUi(QWidget):
 
         self.array_stackedwidget.addWidget(self.line_array)
         self.array_stackedwidget.addWidget(self.circle_array)
+
+
+        #Création et arrangement de la tab pour les options de randomness
+        #====================================================================================================
+
+        #On crée la tab pour la randomness
+        self.tab_random = QWidget()
+        self.layout_random = QVBoxLayout(self.tab_random)
+
+        #On crée la liste qui contiendra toutes les groupbox
+        random_groupbox_list = []
+
+        #Ajout de la tab randomness dans les tabs
+        self.tabs.addTab(self.tab_random, "Randomness")
+
+
+        #Ajout de configurations min/max de translation pour la randomness
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end translation
+        self.random_minmax_trans_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end translation
+        self.random_min_x_trans_label = self.create_label("Translation Min X", self.random_minmax_trans_gridlayout, 0, 0)
+        self.random_min_x_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_trans_gridlayout, 0, 1)
+        self.random_min_x_trans_spin.setValue(-0.5)
+        self.connect_to_select_array(self.random_min_x_trans_spin)
+        self.random_max_x_trans_label = self.create_label("Translation Max X", self.random_minmax_trans_gridlayout, 0, 2)
+        self.random_max_x_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_trans_gridlayout, 0, 3)
+        self.random_max_x_trans_spin.setValue(0.5)
+        self.connect_to_select_array(self.random_max_x_trans_spin)
+
+        self.random_min_y_trans_label = self.create_label("Translation Min Y", self.random_minmax_trans_gridlayout, 1, 0)
+        self.random_min_y_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_trans_gridlayout, 1, 1)
+        self.random_min_y_trans_spin.setValue(-0.5)
+        self.connect_to_select_array(self.random_min_y_trans_spin)
+        self.random_max_y_trans_label = self.create_label("Translation Max Y", self.random_minmax_trans_gridlayout, 1, 2)
+        self.random_max_y_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_trans_gridlayout, 1, 3)
+        self.random_max_y_trans_spin.setValue(0.5)
+        self.connect_to_select_array(self.random_max_y_trans_spin)
+
+        self.random_min_z_trans_label = self.create_label("Translation Min Z", self.random_minmax_trans_gridlayout, 2, 0)
+        self.random_min_z_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_trans_gridlayout, 2, 1)
+        self.random_min_z_trans_spin.setValue(-0.5)
+        self.connect_to_select_array(self.random_min_z_trans_spin)
+        self.random_max_z_trans_label = self.create_label("Translation Max Z", self.random_minmax_trans_gridlayout, 2, 2)
+        self.random_max_z_trans_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_trans_gridlayout, 2, 3)
+        self.random_max_z_trans_spin.setValue(0.5)
+        self.connect_to_select_array(self.random_max_z_trans_spin)
+
+        #On crée la box dans laquelle se trouve le start/end translation
+        self.random_minmax_trans_groupbox = self.create_groupbox("Translation Min/Max", self.random_minmax_trans_gridlayout, random_groupbox_list)
+
+
+        #Ajout de configurations min/max de rotation pour la randomness
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du start/end translation
+        self.random_minmax_rot_gridlayout = QGridLayout()
+
+        #On crée les spinbox du start/end translation
+        self.random_min_x_rot_label = self.create_label("Rotation Min X", self.random_minmax_rot_gridlayout, 0, 0)
+        self.random_min_x_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_rot_gridlayout, 0, 1)
+        self.random_min_x_rot_spin.setValue(-180)
+        self.connect_to_select_array(self.random_min_x_rot_spin)
+        self.random_max_x_rot_label = self.create_label("Rotation Max X", self.random_minmax_rot_gridlayout, 0, 2)
+        self.random_max_x_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_rot_gridlayout, 0, 3)
+        self.random_max_x_rot_spin.setValue(180)
+        self.connect_to_select_array(self.random_max_x_rot_spin)
+
+        self.random_min_y_rot_label = self.create_label("Rotation Min Y", self.random_minmax_rot_gridlayout, 1, 0)
+        self.random_min_y_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_rot_gridlayout, 1, 1)
+        self.random_min_y_rot_spin.setValue(-180)
+        self.connect_to_select_array(self.random_min_y_rot_spin)
+        self.random_max_y_rot_label = self.create_label("Rotation Max Y", self.random_minmax_rot_gridlayout, 1, 2)
+        self.random_max_y_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_rot_gridlayout, 1, 3)
+        self.random_max_y_rot_spin.setValue(180)
+        self.connect_to_select_array(self.random_max_y_rot_spin)
+
+        self.random_min_z_rot_label = self.create_label("Rotation Min Z", self.random_minmax_rot_gridlayout, 2, 0)
+        self.random_min_z_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_rot_gridlayout, 2, 1)
+        self.random_min_z_rot_spin.setValue(-180)
+        self.connect_to_select_array(self.random_min_z_rot_spin)
+        self.random_max_z_rot_label = self.create_label("Rotation Max Z", self.random_minmax_rot_gridlayout, 2, 2)
+        self.random_max_z_rot_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_rot_gridlayout, 2, 3)
+        self.random_max_z_rot_spin.setValue(180)
+        self.connect_to_select_array(self.random_max_z_rot_spin)
+
+        #On crée la box dans laquelle se trouve le start/end rotation
+        self.random_minmax_rot_groupbox = self.create_groupbox("Rotation Min/Max", self.random_minmax_rot_gridlayout, random_groupbox_list)
+
+
+        #Ajout de configurations min/max de scale pour la randomness
+        #----------------------------------------------------------------------------------------------------
+
+        #On crée le layout qui contiendra le groupbox du min/max de scale
+        self.random_minmax_scale_gridlayout = QGridLayout()
+
+        #On crée les spinbox du min/max de scale
+        self.random_min_scale_label = self.create_label("Scale Min", self.random_minmax_scale_gridlayout, 0, 0)
+        self.random_min_scale_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_scale_gridlayout, 0, 1)
+        self.random_min_scale_spin.setValue(0.5)
+        self.connect_to_select_array(self.random_min_scale_spin)
+        self.random_max_scale_label = self.create_label("Scale Max", self.random_minmax_scale_gridlayout, 0, 2)
+        self.random_max_scale_spin = self.create_line_doublespinbox(-9999, 9999, self.random_minmax_scale_gridlayout, 0, 3)
+        self.random_max_scale_spin.setValue(1.5)
+        self.connect_to_select_array(self.random_max_scale_spin)
+
+        #On crée la box dans laquelle se trouve le start/end rotation
+        self.random_minmax_scale_groupbox = self.create_groupbox("Scale Min/Max", self.random_minmax_scale_gridlayout, random_groupbox_list)
+
+
+        #Ajout du groupbox avec les options de randomness
+        #----------------------------------------------------------------------------------------------------
+        
+        #On crée le layout qui contiendra le groupbox du randomness
+        self.random_gridlayout = QGridLayout()
+
+        #On crée le slider pour la randomness de translation
+        self.trans_random_label = self.create_label("Random Translation", self.random_gridlayout, 0, 0)
+        self.trans_random_slider = self.create_line_slider(0, 100, self.random_gridlayout, 0, 1)
+        self.connect_to_select_array(self.trans_random_slider)
+
+        #On crée le slider pour la randomness de rotation
+        self.rot_random_label = self.create_label("Random Rotation", self.random_gridlayout, 1, 0)
+        self.rot_random_slider = self.create_line_slider(0, 100, self.random_gridlayout, 1, 1)
+        self.connect_to_select_array(self.rot_random_slider)
+
+        #On crée le slider pour la randomness de scale
+        self.scale_random_label = self.create_label("Random Scale", self.random_gridlayout, 2, 0)
+        self.scale_random_slider = self.create_line_slider(0, 100, self.random_gridlayout, 2, 1)
+        self.connect_to_select_array(self.scale_random_slider)
+
+        #On crée le slider pour la uniform randomness
+        self.uniform_random_label = self.create_label("Uniform Random", self.random_gridlayout, 3, 0)
+        self.uniform_random_slider = self.create_uniform_slider(0, 100, self.random_gridlayout, 3, 1)
+        self.uniform_random_slider.valueChanged.connect(lambda : self.update_sliders(self.trans_random_slider,
+                                                                                     self.rot_random_slider,
+                                                                                     self.scale_random_slider,
+                                                                                     self.uniform_random_slider))
+
+        #On crée la spinbox avec la seed pour la randomness
+        self.seed_label = self.create_label("Seed", self.random_gridlayout, 4, 0)
+        self.seed_spinbox = self.create_line_spinbox(0, 999, self.random_gridlayout, 4, 1)
+        self.connect_to_select_array(self.seed_spinbox)
+
+        #On crée la box dans laquelle se trouve l'option de randmoness
+        self.random_groupbox = self.create_groupbox("Randomness", self.random_gridlayout, random_groupbox_list)
+
+
+        #Ajout de tous les groupbox dans le layout de randomness
+        #----------------------------------------------------------------------------------------------------
+
+        for groupbox in random_groupbox_list:
+            self.layout_random.addWidget(groupbox)
 
 
         #Création et arrangement de la tab pour importer Suzanne
