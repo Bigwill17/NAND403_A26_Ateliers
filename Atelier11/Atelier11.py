@@ -35,10 +35,13 @@ class RockMaker(QDialog):
         self.subdivisions_slider.valueChanged.connect(self.make_rock)
 
         self.amplitude_slider = self.add_slider(form, "Amplitude", 0, 100, 30, divisor=100)
+        self.amplitude_slider.valueChanged.connect(self.make_rock)
 
         self.frequency_slider = self.add_slider(form, "Frequency", 5, 80, 30, divisor=10)
+        self.frequency_slider.valueChanged.connect(self.make_rock)
 
         self.seed_slider = self.add_slider(form, "Seed", 0, 100, 0)
+        self.seed_slider.valueChanged.connect(self.make_rock)
 
 
         create_button = QPushButton("Create rock")
@@ -80,19 +83,22 @@ class RockMaker(QDialog):
             cmds.setAttr(f"{node}.subdivisionsHeight", subdivisions)
 
         # étape 2 : faire une for loop sur chacun des vertices
-        vertex = cmds.ls(f"pSphere1.vtx[*]", flatten = True)
+        all_vertex = cmds.ls(f"pSphere1.vtx[*]", flatten = True)
 
-        for vert in vertex:
-            print(vert)
+        for vertex in all_vertex:
+            original_x, original_y, original_z = cmds.xform(vertex, query = True, worldSpace = True, translation = True)
+            cmds.xform(vertex, relative = True, worldSpace = True, translation = (self.get_bump(original_x, original_y, original_z, frequency, seed)[0] * amplitude,
+                                                                                  self.get_bump(original_x, original_y, original_z, frequency, seed)[1] * amplitude,
+                                                                                  self.get_bump(original_x, original_y, original_z, frequency, seed)[2] * amplitude))
 
 
         # étape 3 : déplacer chaque vertex avec un valeur aléatoire (get_bump)
         pass
 
-    def get_bump(x, y, z, frequency, seed):
-        return (math.sin(x * frequency + seed)
-                + math.sin(y * frequency + seed * 2)
-                + math.sin(z * frequency + seed * 3)) / 3
+    def get_bump(self, x, y, z, frequency, seed):
+        return (math.sin(x * frequency + seed),
+                math.sin(y * frequency + seed * 2),
+                math.sin(z * frequency + seed * 3) / 3)
 
 def show_tool():
     global tool_window
